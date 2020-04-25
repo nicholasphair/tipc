@@ -16,4 +16,8 @@ build
 *.bc
 *.ll
 
-
+.doxygen/
+.idea/
+src/cmake-build-debug/
+target/
+*.swp

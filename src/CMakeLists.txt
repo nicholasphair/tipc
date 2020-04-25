@@ -31,7 +31,7 @@ include_directories(${ANTLR4_INCLUDE_DIRS})
 
 # set variable pointing to the antlr tool that supports C++
 # this is not required if the jar file can be found under PATH environment
-set(ANTLR_EXECUTABLE /home/matthewbdwyer/lib/antlr-4.8-complete.jar)
+set(ANTLR_EXECUTABLE /home/nphair/.local/lib/antlr-4.8-complete.jar)
 
 # Use this setup for cs6620.cs.virginia.edu
 #set(ANTLR_EXECUTABLE /sw/linux-any/antlr/4.8/antlr-4.8-complete.jar)
@@ -59,6 +59,14 @@ include_directories(${ANTLR_TIPGrammar_OUTPUT_DIR})
 # list the specific LLVM libraries for this tool
 llvm_map_components_to_libnames(llvm_libs Support Core Passes)
 
+# Type Checking libs.
+include_directories(solvers)
+add_subdirectory(solvers)
+set_target_properties(solversLib PROPERTIES LINKER_LANGUAGE CXX)
+
+# Testing.
+add_subdirectory(catch_tests)
+
 # add generated grammar to pretty printer binary target
 add_executable(tipc 
                tipc.cpp 
@@ -66,4 +74,4 @@ add_executable(tipc
                TIPtreeGen.cpp 
                TIPtreePrint.cpp
                ${ANTLR_TIPGrammar_CXX_OUTPUTS})
-target_link_libraries(tipc antlr4_static ${llvm_libs})
+target_link_libraries(tipc antlr4_static ${llvm_libs} solversLib)
