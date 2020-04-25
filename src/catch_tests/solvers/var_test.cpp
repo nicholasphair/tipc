@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "MockTerms.h"
+#include "mock_terms.h"
 
 TEST_CASE("test the free variables of a var includes itself", "[var]") {
     TestVar var;

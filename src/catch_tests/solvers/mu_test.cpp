@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "MockTerms.h"
+#include "mock_terms.h"
 
 TEST_CASE("test free variables returns ts free vars minus v", "[mu]") {
     TestMu mu;

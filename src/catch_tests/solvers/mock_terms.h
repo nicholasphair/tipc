@@ -1,5 +1,5 @@
-#ifndef TIPC_MOCKTERMS_H
-#define TIPC_MOCKTERMS_H
+#ifndef TIPC_MOCK_TERMS_H
+#define TIPC_MOCK_TERMS_H
 #include "cons.hpp"
 #include "mu.hpp"
 #include "term.hpp"
@@ -30,4 +30,4 @@ class TestMu: public Mu {
 };
 
 
-#endif //TIPC_MOCKTERMS_H
+#endif //TIPC_MOCK_TERMS_H

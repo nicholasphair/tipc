@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "var.hpp"
 
 Var::Var() {
@@ -9,10 +10,12 @@ std::set<Term *> Var::free_variables() {
 }
 
 Term * Var::substitute(Term * var, Term * term) {
-    // will this ever return true? or do i need to cast to var?
-    if(var == this) {
-        return term;
-    } else {
-        return this;
+    if(Var * v = dynamic_cast<Var *>(v)) {
+        if(var == this) {
+            return term;
+        } else {
+            return this;
+        }
     }
+    assert(0);
 }

@@ -1,12 +1,12 @@
-#include "TermOps.hpp"
+#include "term_ops.hpp"
 #include "cons.hpp"
 #include "assert.h"
 
-Term *TermOps::close(Term *term, std::map<Var *, Term *> env) {
+Term *term_ops::close(Term *term, std::map<Var *, Term *> env) {
     return closeRec(term, env);
 }
 
-Term *TermOps::closeRec(Term * term, std::map<Var *, Term *> env, std::set<Var *> visited) {
+Term *term_ops::closeRec(Term * term, std::map<Var *, Term *> env, std::set<Var *> visited) {
     if(Var * v = dynamic_cast<Var *>(term)) {
         if(visited.count(v) == 0 && env.at(v) != v) {
             // no cycle found, and the variable does not map to itself

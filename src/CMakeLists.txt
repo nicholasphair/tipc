@@ -9,8 +9,8 @@ pkg_search_module(UUID REQUIRED uuid)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake)
 
-# compiler must be 11 
-set(CMAKE_CXX_STANDARD 11)
+# compiler must be 17
+set(CMAKE_CXX_STANDARD 17)
 
 # compile with debug flags
 set(CMAKE_BUILD_TYPE Debug)
@@ -59,19 +59,26 @@ include_directories(${ANTLR_TIPGrammar_OUTPUT_DIR})
 # list the specific LLVM libraries for this tool
 llvm_map_components_to_libnames(llvm_libs Support Core Passes)
 
+add_library(tipTreeLib STATIC TIPtreeGen.cpp TIPtreePrint.cpp)
+
 # Type Checking libs.
 include_directories(solvers)
 add_subdirectory(solvers)
 set_target_properties(solversLib PROPERTIES LINKER_LANGUAGE CXX)
 
+include_directories(types)
+add_subdirectory(types)
+set_target_properties(typesLib PROPERTIES LINKER_LANGUAGE CXX)
+
 # Testing.
 add_subdirectory(catch_tests)
 
 # add generated grammar to pretty printer binary target
-add_executable(tipc 
-               tipc.cpp 
-               TIPtreeBuild.cpp 
-               TIPtreeGen.cpp 
-               TIPtreePrint.cpp
-               ${ANTLR_TIPGrammar_CXX_OUTPUTS})
-target_link_libraries(tipc antlr4_static ${llvm_libs} solversLib)
+
+add_executable(tipc
+        tipc.cpp
+        TIPtreeBuild.cpp
+        TIPtreeGen.cpp
+        TIPtreePrint.cpp
+        ${ANTLR_TIPGrammar_CXX_OUTPUTS})
+target_link_libraries(tipc antlr4_static ${llvm_libs} solversLib typesLib)

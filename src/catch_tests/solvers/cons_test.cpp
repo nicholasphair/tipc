@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "MockTerms.h"
+#include "mock_terms.h"
 
 TEST_CASE("test arity is the size of arguments", "[cons]") {
     TestCons cons;
