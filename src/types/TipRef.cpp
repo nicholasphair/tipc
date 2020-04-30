@@ -1,4 +1,5 @@
 #include "TipRef.hpp"
+#include "var.hpp"
 
 TipRef::TipRef() {
     assert(0);
@@ -19,4 +20,8 @@ Term *TipRef::substitute(Term *var, Term *term) {
 std::string TipRef::toString() {
     // TODO: How the hell does scala print terms??
     return "&of";
+}
+
+bool TipRef::is_concrete() {
+    return true;
 }

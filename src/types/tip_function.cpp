@@ -9,7 +9,8 @@ TipFunction::TipFunction() {
 TipFunction::TipFunction(std::vector<Term *> params, Term *ret) {
     this->params = params;
     this->ret = ret;
-    this->arguments.insert(this->params.begin(), ret);
+    //this->arguments.insert(this->params.begin(), ret);
+    this->arguments.push_back(ret);
 }
 
 Term *TipFunction::substitute(Term *var, Term *term) {
@@ -29,11 +30,11 @@ std::string TipFunction::toString() {
     // Does scala use the to string method?
     std::string str = "(";
     for(auto p : this->params) {
-        str += "p";
+        str += p->toString();
         str += ",";
     }
     str += ") -> ";
-    str += "*this->ret";
+    str += this->ret->toString();
     return str;
 }
 

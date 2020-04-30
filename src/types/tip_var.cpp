@@ -9,8 +9,11 @@ TipVar::TipVar() {
 }
 
 std::string TipVar::toString() {
-    std::string p = this->node->print();
-    return "\u03B1<" + p + ">";
+    std::string str;
+    str += "[[";
+    str += this->node->print();
+    str += "]]";
+    return str;
 }
 
 bool TipVar::is_concrete() {

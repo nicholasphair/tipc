@@ -10,7 +10,7 @@ public:
 
     Term * substitute(Term * var, Term * term) override;
     bool is_concrete() override;
-    std::string toString();
+    std::string toString() override ;
 
     Term * of;
 };

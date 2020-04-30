@@ -6,8 +6,8 @@ std::set<Term *> Mu::free_variables() {
     return s1;
 }
 
-std::string Mu::toString() {
-    // TODO: make this meaningful.
-    return "\u03bc$v.$t";
-}
+//std::string Mu::toString() {
+//    // TODO: make this meaningful.
+//    return "\u03bc$v.$t";
+//}
 

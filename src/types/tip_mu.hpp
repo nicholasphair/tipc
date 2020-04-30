@@ -13,6 +13,7 @@ public:
     TipMu(Var * v, Term * t);
     Term * substitute(Term * var, Term * term) override;
     bool is_concrete() override;
+    std::string toString() override ;
 
     Var * v;
     Term * t;

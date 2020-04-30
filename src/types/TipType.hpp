@@ -2,10 +2,11 @@
 #define TIPC_TIPTYPE_H
 
 #include "../TIPtree.h"
-#include "var.hpp"
 
 class TipType {
+public:
     //TipType() = delete;
+    virtual std::string toString() = 0;
 };
 
 

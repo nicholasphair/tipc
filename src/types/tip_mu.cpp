@@ -25,3 +25,7 @@ bool TipMu::is_concrete() {
     return true;
 }
 
+std::string TipMu::toString() {
+    return Mu::toString();
+}
+

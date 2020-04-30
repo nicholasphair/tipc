@@ -10,7 +10,7 @@ public:
     TipVar();
     explicit TipVar(TIPtree::Node * node);
 
-    std::string toString();
+    std::string toString() override;
     TIPtree::Node * node ;
     bool is_concrete() override;
 };

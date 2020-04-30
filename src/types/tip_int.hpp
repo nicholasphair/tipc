@@ -9,7 +9,7 @@ class TipInt: public TipType, public Cons {
 public:
     TipInt();
     Term * substitute(Term * var, Term * term) override;
-    std::string toString();
+    std::string toString() override;
     bool is_concrete() override;
 
 };

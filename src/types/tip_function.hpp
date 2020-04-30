@@ -12,7 +12,7 @@ public:
     TipFunction(std::vector<Term *> params, Term * ret);
     Term * substitute(Term * var, Term * term) override;
     bool is_concrete() override;
-    std::string toString();
+    std::string toString() override;
 
     std::vector<Term *> params;
     Term * ret;

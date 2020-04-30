@@ -7,7 +7,7 @@
 #include "TIPtreeGen.h"
 #include "antlr4-runtime.h"
 #include "llvm/Support/CommandLine.h"
-#include "TIPtreeSimpleVisitor.h"
+#include "TIPtreeTypeConstraintVisitor.h"
 
 using namespace std;
 using namespace antlr4;
@@ -43,10 +43,17 @@ int main(int argc, const char *argv[]) {
   TIPtreeBuild tb(&parser);
   auto ast = tb.build(tree);
 
+  if(true) {
+      TIPtreeTypeConstraintVisitor visitor;
+      ast->accept(&visitor);
+      for(auto constraint : visitor.get_constraints()) {
+          std::cout << constraint.toString() << std::endl;
+      }
+      return 0;
+  }
+
   if (pp || ppWlines) {
-      TIPtreeSimpleVisitor simpleVisitor;
-      ast->accept(&simpleVisitor);
-    //std::cout << ast->print("  ", ppWlines);
+      std::cout << ast->print("  ", ppWlines);
   } else {
     auto theModule = ast->codegen(sourceFile);
 
