@@ -75,10 +75,16 @@ add_subdirectory(catch_tests)
 
 # add generated grammar to pretty printer binary target
 
+file(GLOB TIP_HEADER_FILES *.h)
+file(GLOB TIP_SOURCE_FILES *.cpp)
 add_executable(tipc
         tipc.cpp
         TIPtreeBuild.cpp
         TIPtreeGen.cpp
+        #TIPtree.h
+        TIPtree.cpp
         TIPtreePrint.cpp
+        TIPtreeVisitor.h
+        TIPtreeSimpleVisitor.cpp
         ${ANTLR_TIPGrammar_CXX_OUTPUTS})
 target_link_libraries(tipc antlr4_static ${llvm_libs} solversLib typesLib)
