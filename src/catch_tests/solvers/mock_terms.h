@@ -22,6 +22,14 @@ class TestCons: public Cons {
     std::string toString() override {return "mock cons";};
 };
 
+class TestNCons: public TestCons {
+public:
+    TestNCons() = delete;
+    TestNCons(int arity) : _arity(arity) {}
+    int arity() override {return _arity;}
+    int _arity;
+};
+
 class TestVar: public Var {
     bool is_concrete() override { return true; }
     std::string toString() override {return "mock var";};

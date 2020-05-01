@@ -8,7 +8,7 @@ class Cons: public Term {
 public:
     std::set<Term *> free_variables() override;
     std::vector<Term *> arguments;
-    int arity();
+    virtual int arity();
     bool do_match(Term * t);
 };
 

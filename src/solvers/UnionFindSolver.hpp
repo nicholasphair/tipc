@@ -5,19 +5,32 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "../types/TypeConstraint.h"
+#include "UnionFind.h"
+#include <iostream>
 
 class UnionFindSolver {
 public:
-    UnionFindSolver();
-    Term * find(Term * t);
-    std::map<Var *, Term *> solution();
-    std::string toString();
-    std::map<Term *, std::vector<Term *>> unifications();
+    UnionFindSolver() = delete;
+    UnionFindSolver(std::vector<TypeConstraint> constrs): constraints(std::move(constrs)) {
+        std::vector<Term *> terms;
+        for(TypeConstraint t : constraints) {
+            terms.push_back(t.lhs);
+            terms.push_back(t.rhs);
+        }
+        unionFind = new UnionFind(terms);
+    };
+    ~UnionFindSolver();
+
+    void solve();
     void unify(Term * t1, Term * t2);
 private:
-    void mkUnion(Term * t1, Term * t2);
-    void mkSet(Term * t);
-    std::map<Term *, Term *> parent;
+    bool isTermVar(Term *);
+    bool isProperType(Term *);
+    bool isCons(Term *);
+    void throwUnifyException(Term * term1, Term * term2);
+    std::vector<TypeConstraint> constraints;
+    UnionFind * unionFind;
 };
 
 

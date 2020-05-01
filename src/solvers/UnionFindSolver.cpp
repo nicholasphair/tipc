@@ -1,79 +1,46 @@
 #include "UnionFindSolver.hpp"
 #include "cons.hpp"
 #include <iostream>
-#include <assert.h>
 #include "UnificationError.hpp"
+#include <sstream>
 
-UnionFindSolver::UnionFindSolver() {
-
+UnionFindSolver::~UnionFindSolver() {
+    delete unionFind;
 }
 
-Term *UnionFindSolver::find(Term *t) {
-    mkSet(t);
-    if(this->parent[t] != t) {
-        auto p = this->parent[t];
-        this->parent.insert(std::pair<Term *, Term *>(t, p));
+void UnionFindSolver::solve() {
+    for(TypeConstraint constraint: constraints) {
+        unify(constraint.lhs, constraint.rhs);
     }
-    return this->parent[t];
 }
 
-std::map<Var *, Term *> UnionFindSolver::solution() {
-    // TODO:
-    return std::map<Var *, Term *>();
-}
-
-std::string UnionFindSolver::toString() {
-    std::string str;
-    for(auto const &x : this->parent) {
-        str += x.first->toString() + " + " + x.second->toString() += "\n";
-    }
-    return str;
-}
-
-std::map<Term *, std::vector<Term *>> UnionFindSolver::unifications() {
-    std::vector<Term *> keys;
-    for(auto it = this->parent.begin(); it !=this->parent.end(); ++it) {
-        keys.push_back(it->first);
-    }
-
-    for(auto x : keys) {
-        if(Var * v = dynamic_cast<Var *>(x)) {
-
-        }
-    }
-
-
-
-    // TODO:
-    return std::map<Term *, std::vector<Term *>>();
-}
-
-void UnionFindSolver::unify(Term *t1, Term *t2) {
+void UnionFindSolver::unify(Term *term1, Term *term2) {
     std::cout << "unifying t1 and t1" << std::endl;
-    mkSet(t1);
-    mkSet(t2);
-    auto rep1 = find(t1);
-    auto rep2 = find(t2);
+    auto rep1 = unionFind->find(term1);
+    auto rep2 = unionFind->find(term2);
+
+    if(rep1 == nullptr || rep2 == nullptr) {
+        throw UnificationError("one or both of these terms is not in the structure");
+    }
 
     if(rep1 == rep2) {
        return;
     }
 
-    Var * v1 = dynamic_cast<Var *>(rep1);
-    Var * v2 = dynamic_cast<Var *>(rep2);
-    Term * term1 = dynamic_cast<Term *>(rep1);
-    Term * term2 = dynamic_cast<Term *>(rep2);
-    Cons * f1 = dynamic_cast<Cons *>(rep1);
-    Cons * f2 = dynamic_cast<Cons *>(rep2);
+    if(isTermVar(term1) && isTermVar(term1)) {
+        unionFind->quick_union(term1, term2);
+    } else if(isTermVar(term1) && isProperType(term2)) {
+        unionFind->quick_union(term1, term2);
+    } else if(isProperType(term1) && isTermVar(term2)) {
+        unionFind->quick_union(term2, term1);
+    } else if(isCons(term1) && isCons(term2)) {
+        auto f1 = dynamic_cast<Cons *>(term1);
+        auto f2 = dynamic_cast<Cons *>(term2);
+        if(!f1->do_match(f2)) {
+            throwUnifyException(f1, f2);
+        }
 
-    if(v1 != nullptr && v2 != nullptr) {
-        mkUnion(v1, v2);
-    } else if(v1 != nullptr && term2 != nullptr) {
-        mkUnion(v1, term2);
-    } else if(term1 != nullptr && v2 != nullptr) {
-        mkUnion(v2, term2);
-    } else if(f1 != nullptr && f2 != nullptr && f1->do_match(f2)) {
-        mkUnion(f1, f2);
+        unionFind->quick_union(term1, term2);
         for(int i = 0; i < f1->arguments.size(); i++) {
             auto a1 = f1->arguments.at(i);
             auto a2 = f2->arguments.at(i);
@@ -81,20 +48,31 @@ void UnionFindSolver::unify(Term *t1, Term *t2) {
             unify(a1, a2);
         }
     } else {
-        std::string msg;
-        msg += "Can't unify " + t1->toString() + "and " + t2->toString() +
-                " ( with representatives " + rep1->toString() + " and " +
-                rep2-> toString() + ")";
-        throw UnificationError(msg.c_str());
+        throwUnifyException(term1, term2);
     }
 }
 
-void UnionFindSolver::mkUnion(Term *t1, Term *t2) {
-    this->parent.insert(std::pair<Term *, Term *>(t1, t2));
+void UnionFindSolver::throwUnifyException(Term * term1, Term * term2) {
+    std::stringstream s;
+    s << "Cannot unify " << term1->toString() << "and " << term2->toString();
+    throw UnificationError(s.str().c_str());
 }
 
-void UnionFindSolver::mkSet(Term *t) {
-    if(this->parent.count(t) == 0) {
-        this->parent.insert(std::pair<Term *, Term *>(t, t));
-    }
+bool UnionFindSolver::isTermVar(Term * term) {
+    bool b =  dynamic_cast<Var *>(term) != nullptr;
+    return b;
 }
+
+bool UnionFindSolver::isProperType(Term * term) {
+    bool b = dynamic_cast<Var *>(term) == nullptr && dynamic_cast<Cons *>(term) == nullptr;
+    return b;
+}
+
+bool UnionFindSolver::isCons(Term * term) {
+    bool b = dynamic_cast<Cons *>(term) != nullptr;
+    return b;
+}
+
+
+
+

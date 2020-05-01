@@ -15,7 +15,6 @@ public:
 
     Term * find(Term * t);
     void quick_union(Term * t1, Term * t2);
-
     bool connected(Term * t1, Term * t2);
 private:
     // A mapping from terms to parents.
