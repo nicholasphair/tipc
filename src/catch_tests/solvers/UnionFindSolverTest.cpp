@@ -1,7 +1,7 @@
 #include "catch.hpp"
-#include "mock_terms.h"
+#include "MockTerms.h"
 #include "UnionFindSolver.hpp"
-#include "TypeConstraint.h"
+#include "../../constraints/TypeConstraint.h"
 #include "UnificationError.hpp"
 #include <iostream>
 
@@ -53,4 +53,16 @@ TEST_CASE("test unifying cons with same arity", "[UnionFindSolver]") {
 
     UnionFindSolver solver(constraints);
     REQUIRE_NOTHROW(solver.unify(&t1, &t2));
+}
+
+TEST_CASE("test short", "[UnionFindSolver]") {
+    // Explicityl generate the constrains from short then try to unify.
+    //TestNCons t1(42);
+    //TestNCons t2(42);
+    //TypeConstraint constraint(&t1, &t2);
+    //std::vector<TypeConstraint> constraints {constraint};
+
+    //UnionFindSolver solver(constraints);
+    //REQUIRE_NOTHROW(solver.unify(&t1, &t2));
+    REQUIRE(true);
 }

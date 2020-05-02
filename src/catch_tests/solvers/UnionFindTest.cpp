@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "mock_terms.h"
+#include "MockTerms.h"
 #include "UnionFind.h"
 
 TEST_CASE("test constructor", "[UnionFind]") {

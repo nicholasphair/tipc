@@ -59,7 +59,9 @@ include_directories(${ANTLR_TIPGrammar_OUTPUT_DIR})
 # list the specific LLVM libraries for this tool
 llvm_map_components_to_libnames(llvm_libs Support Core Passes)
 
-add_library(tipTreeLib STATIC TIPtreeGen.cpp TIPtreePrint.cpp)
+#add_library(tipTreeLib STATIC TIPtreeGen.cpp TIPtree.cpp TIPtreePrint.cpp TIPtreeVisitor.h)
+add_library(tipTreeLib STATIC TIPtreeGen.cpp TIPtreeBuild.cpp TIPtree.cpp TIPtreePrint.cpp TIPtreeVisitor.h ${ANTLR_TIPGrammar_CXX_OUTPUTS})
+target_link_libraries(tipTreeLib antlr4_static ${llvm_libs})
 
 # Type Checking libs.
 include_directories(solvers)
@@ -69,6 +71,16 @@ set_target_properties(solversLib PROPERTIES LINKER_LANGUAGE CXX)
 include_directories(types)
 add_subdirectory(types)
 set_target_properties(typesLib PROPERTIES LINKER_LANGUAGE CXX)
+
+#
+include_directories(validators)
+add_subdirectory(validators)
+set_target_properties(validatorsLib PROPERTIES LINKER_LANGUAGE CXX)
+
+#
+include_directories(constraints)
+add_subdirectory(constraints)
+set_target_properties(constraintsLib PROPERTIES LINKER_LANGUAGE CXX)
 
 # Testing.
 add_subdirectory(catch_tests)
@@ -85,6 +97,6 @@ add_executable(tipc
         TIPtree.cpp
         TIPtreePrint.cpp
         TIPtreeVisitor.h
-        TIPtreeSimpleVisitor.cpp
+        utils/TIPtreeSimpleVisitor.cpp
         ${ANTLR_TIPGrammar_CXX_OUTPUTS})
-target_link_libraries(tipc antlr4_static ${llvm_libs} solversLib typesLib)
+target_link_libraries(tipc antlr4_static ${llvm_libs} solversLib typesLib constraintsLib validatorsLib)

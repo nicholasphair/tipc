@@ -1,18 +1,19 @@
 #ifndef TIPC_TIPREF_HPP
 #define TIPC_TIPREF_HPP
 #include "TipType.hpp"
-#include "cons.hpp"
+#include "Cons.hpp"
 
 class TipRef: public TipType, public Cons {
 public:
-    TipRef();
-    TipRef(Term * of);
+    TipRef() = delete;
+    TipRef(Term * of): of(of) { arguments.push_back(of); };
 
     Term * substitute(Term * var, Term * term) override;
-    bool is_concrete() override;
     std::string toString() override ;
 
     Term * of;
+    bool operator==(const Term& other) const override;
+    bool operator!=(const Term& other) const override;
 };
 
 

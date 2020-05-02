@@ -1,4 +1,3 @@
-#pragma once
 #include "TIPtreeVisitor.h"
 
 void TIPtree::NumberExpr::accept(TIPtreeVisitor  * visitor)  {

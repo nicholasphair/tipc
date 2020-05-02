@@ -1,10 +1,10 @@
 #ifndef TIPC_TIPTYPEOPS_H
 #define TIPC_TIPTYPEOPS_H
 
-#include "term_ops.hpp"
+#include "TermOps.hpp"
 
 
-class TipTypeOps: public term_ops {
+class TipTypeOps: public TermOps {
     Mu * make_mu(Var * var, Term * term);
     Var * make_alpha(Var * var);
 };

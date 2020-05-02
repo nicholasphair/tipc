@@ -7,8 +7,11 @@
 #include "TIPtreeGen.h"
 #include "antlr4-runtime.h"
 #include "llvm/Support/CommandLine.h"
+#include "UnionFindSolver.hpp"
 #include "TIPtreeTypeConstraintVisitor.h"
+#include "UniqueIdentifiersVisitor.hpp"
 
+#include <set>
 using namespace std;
 using namespace antlr4;
 using namespace TIPtree;
@@ -43,12 +46,26 @@ int main(int argc, const char *argv[]) {
   TIPtreeBuild tb(&parser);
   auto ast = tb.build(tree);
 
+  UniqueIdentifiersVisitor uniqueIdentifiersVisitor;
+  ast->accept(&uniqueIdentifiersVisitor);
+  if(!uniqueIdentifiersVisitor.all_identifiers_unique()) {
+      std::cerr << "ERROR: the following identifiers conflict with a previously observed identifier:\n" ;
+      for(auto dup : uniqueIdentifiersVisitor.get_conflicting_identifiers()) {
+          std::cerr << dup.first << ":" << dup.second << "\n";
+      }
+      std::cerr << "tip assumes that no identifier in a program is declared more than once" << std::endl;
+  }
+
+
   if(true) {
       TIPtreeTypeConstraintVisitor visitor;
       ast->accept(&visitor);
       for(auto constraint : visitor.get_constraints()) {
           std::cout << constraint.toString() << std::endl;
       }
+
+      UnionFindSolver solver(visitor.get_constraints());
+      solver.solve();
       return 0;
   }
 

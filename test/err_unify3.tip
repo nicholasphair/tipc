@@ -1,0 +1,7 @@
+main() {
+    var x, y;
+    x = 5;
+    y = 10;
+    x = &y;
+    return 4;
+}

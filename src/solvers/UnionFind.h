@@ -5,7 +5,7 @@
 #ifndef TIPC_UNIONFIND_H
 #define TIPC_UNIONFIND_H
 #include <map>
-#include "term.hpp"
+#include "Term.hpp"
 #include <vector>
 
 class UnionFind {

@@ -1,14 +1,6 @@
 #include "TipRef.hpp"
-#include "var.hpp"
-
-TipRef::TipRef() {
-    assert(0);
-}
-
-TipRef::TipRef(Term *of) {
-    this->of = of;
-    this->arguments.push_back(of);
-}
+#include "Var.hpp"
+#include <sstream>
 
 Term *TipRef::substitute(Term *var, Term *term) {
     if(Var * sv = dynamic_cast<Var *>(var)) {
@@ -18,10 +10,18 @@ Term *TipRef::substitute(Term *var, Term *term) {
 }
 
 std::string TipRef::toString() {
-    // TODO: How the hell does scala print terms??
-    return "&of";
+    std::stringstream stream;
+    stream << "&" << of->toString();
+    return stream.str();
 }
 
-bool TipRef::is_concrete() {
-    return true;
+bool TipRef::operator==(const Term &other) const {
+    if(auto t = dynamic_cast<const TipRef *>(&other)) {
+        return of == t->of;
+    }
+    return false;
+}
+
+bool TipRef::operator!=(const Term &other) const {
+    return !(*this == other);
 }

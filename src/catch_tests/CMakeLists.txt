@@ -1,3 +1,7 @@
 include_directories(.)
+include_directories(utils)
+add_subdirectory(utils)
 add_subdirectory(solvers)
 add_subdirectory(types)
+add_subdirectory(constraints)
+add_subdirectory(validators)
