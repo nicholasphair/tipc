@@ -28,12 +28,10 @@ TEST_CASE("test short", "[UnionFindSolver]") {
     TIPtreeTypeConstraintVisitor typeConstraintVisitor(declarationsVisitor.get_canonicals());
     ast->accept(&typeConstraintVisitor);
     auto tcs = typeConstraintVisitor.get_constraints();
-    for(auto tc : tcs) {
-        std::cout << tc << std::endl;
-    }
+
     UnionFindSolver unionFindSolver(tcs);
 
-    //unionFindSolver.solve();
+    unionFindSolver.solve();
     REQUIRE(true);
 }
 

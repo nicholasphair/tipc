@@ -23,7 +23,7 @@ void TIPtreeTypeConstraintVisitor::visit_function(TIPtree::Function  * element) 
 
     std::vector<Term *> args;
     for(auto &formal : element->FORMALS) {
-        TipVar * var = safeTipVarGenerate(&canonicals.at(formal));
+        TipVar * var = safeTipVarGenerate(formal);
         args.push_back(var);
     }
 
@@ -36,7 +36,7 @@ void TIPtreeTypeConstraintVisitor::visit_function(TIPtree::Function  * element) 
     }
 
     auto n = element->getName();
-    TipVar * tipVar = safeTipVarGenerate(&canonicals.at(n));
+    TipVar * tipVar = safeTipVarGenerate(n);
     auto ret = safeTipVarGenerate(element->BODY.back().get());
     TipFunction * tipFunction = new TipFunction(args, ret);
     TypeConstraint constraint(tipVar, tipFunction);

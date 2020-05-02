@@ -62,7 +62,6 @@ int main(int argc, const char *argv[]) {
   DeclarationsVisitor declarationsVisitor;
   ast->accept(&declarationsVisitor);
 
-
   if(true) {
       TIPtreeTypeConstraintVisitor visitor(declarationsVisitor.get_canonicals());
       ast->accept(&visitor);
@@ -74,6 +73,7 @@ int main(int argc, const char *argv[]) {
       solver.solve();
       return 0;
   }
+
 
   if (pp || ppWlines) {
       std::cout << ast->print("  ", ppWlines);

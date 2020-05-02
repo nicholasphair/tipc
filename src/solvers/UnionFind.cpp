@@ -6,6 +6,7 @@ UnionFind::UnionFind(std::vector<Term *> seed) {
     for(auto term : seed) {
         edges.insert(std::pair<Term *, Term *>(term, term));
     }
+    std::cout << "EDGES SIZE: " << edges.size() << std::endl;
 }
 
 Term *UnionFind::find(Term *t) {
@@ -14,7 +15,7 @@ Term *UnionFind::find(Term *t) {
         assert(0);
     }
 
-    while(get_parent(parent) != parent) {
+    while(*get_parent(parent) != *parent) {
         parent = get_parent(parent);
     }
     return parent;
@@ -32,7 +33,7 @@ void UnionFind::quick_union(Term *t1, Term *t2) {
 }
 
 bool UnionFind::connected(Term *t1, Term *t2) {
-    return find(t1) == find(t2);
+    return *find(t1) == *find(t2);
 }
 
 Term *UnionFind::get_parent(Term * term) {
@@ -40,6 +41,7 @@ Term *UnionFind::get_parent(Term * term) {
 }
 
 void UnionFind::print_edges() {
+    std::cout << "EDGES SIZE: " << edges.size() << std::endl;
     for(auto e : edges) {
         std::cout << e.first->toString() << "--> parent(" << e.second->toString() << ")" << std::endl;
     }

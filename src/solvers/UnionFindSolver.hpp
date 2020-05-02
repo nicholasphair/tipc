@@ -18,37 +18,32 @@ public:
     UnionFindSolver(std::vector<TypeConstraint> constrs): constraints(std::move(constrs)) {
         std::vector<Term *> terms;
         for(TypeConstraint t : constraints) {
-            // TODO: SUBTERMS
             auto l = t.lhs;
             auto r = t.rhs;
             terms.push_back(l);
             terms.push_back(r);
 
             if(auto f1 = dynamic_cast<Cons *>(l)) {
-                for(auto a : f1->arguments) {
-                    std::cout << "adding subterm: " << a->toString() << std::endl;
-                    terms.push_back(a);
-                }
+                for(auto a : f1->arguments) terms.push_back(a);
             }
-
             if(auto f2 = dynamic_cast<Cons *>(r)) {
-                for(auto a : f2->arguments) {
-                    std::cout << "adding subterm: " << a->toString() << std::endl;
-                    terms.push_back(a);
-                }
+                for(auto a : f2->arguments) terms.push_back(a);
             }
         }
 
-        auto cmp = [](Term* a, Term* b) {return *a == *b;};
-        auto it = std::unique(terms.begin(), terms.end(), cmp);
-        terms.resize(std::distance(terms.begin(), it));
-        std::cout << "Total unique terms: " << terms.size() << std::endl;
+        // Deduplicate terms.
+        std::vector<Term *> unique;
         for(auto t : terms) {
-            std::cout << t->toString() << std::endl;
+            bool add = true;
+            for(auto u : unique) {
+                if(*t == *u) add = false;
+            }
+            if(add) unique.push_back(std::move(t));
         }
-        std::cout << "====" << std::endl;
 
-        unionFind = new UnionFind(terms);
+        std::cout << "size of terms = " << unique.size() << std::endl;
+
+        unionFind = new UnionFind(unique);
     };
 
 
