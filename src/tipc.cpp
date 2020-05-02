@@ -67,7 +67,7 @@ int main(int argc, const char *argv[]) {
       TIPtreeTypeConstraintVisitor visitor(declarationsVisitor.get_canonicals());
       ast->accept(&visitor);
       for(auto constraint : visitor.get_constraints()) {
-          std::cout << constraint.toString() << std::endl;
+          std::cout << constraint << std::endl;
       }
 
       UnionFindSolver solver(visitor.get_constraints());

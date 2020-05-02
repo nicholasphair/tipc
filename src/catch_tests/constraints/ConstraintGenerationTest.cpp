@@ -6,7 +6,7 @@
 #include "UnificationError.hpp"
 #include <iostream>
 
-TEST_CASE("test constraint generation", "[foo]") {
+TEST_CASE("test constraint generation", "[TIPtreeTypeConstraintVisitor]") {
     std::stringstream stream;
     stream << R"(
       short() {
@@ -25,9 +25,35 @@ TEST_CASE("test constraint generation", "[foo]") {
 
     TIPtreeTypeConstraintVisitor typeConstraintVisitor(declarationsVisitor.get_canonicals());
     ast->accept(&typeConstraintVisitor);
-    for(auto tc : typeConstraintVisitor.get_constraints()) {
-        std::cout << tc.toString() << std::endl;
+    auto tcs = typeConstraintVisitor.get_constraints();
+    for(auto tc : tcs) {
+        std::cout << tc << std::endl;
     }
-    REQUIRE(true);
+    REQUIRE(tcs.size() == 8);
 }
 
+TEST_CASE("test constraint generation 2", "[TIPtreeTypeConstraintVisitor]") {
+    std::stringstream stream;
+    stream << R"(
+      foo() {
+        var x, y, z;
+        x = 5;
+        y = &y;
+        z = foo;
+        return z;
+      }
+    )";
+
+    auto ast = ASTHelper::build_ast(stream);
+    DeclarationsVisitor declarationsVisitor;
+    ast->accept(&declarationsVisitor);
+
+    TIPtreeTypeConstraintVisitor typeConstraintVisitor(declarationsVisitor.get_canonicals());
+    ast->accept(&typeConstraintVisitor);
+    auto tcs = typeConstraintVisitor.get_constraints();
+    for(auto tc : tcs) {
+        std::cout << tc << std::endl;
+    }
+
+    REQUIRE(tcs.size() == 6);
+}

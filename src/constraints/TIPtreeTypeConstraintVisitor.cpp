@@ -158,8 +158,8 @@ void TIPtreeTypeConstraintVisitor::visit_assignStmt (TIPtree::AssignStmt  * elem
         TypeConstraint constraint(lvar, rvar);
         constraints.push_back(constraint);
 
+        element->LHS->accept(this);
     }
-    element->LHS->accept(this);
     element->RHS->accept(this);
 }
 
