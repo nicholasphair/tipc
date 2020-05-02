@@ -10,6 +10,7 @@
 #include "UnionFindSolver.hpp"
 #include "TIPtreeTypeConstraintVisitor.h"
 #include "UniqueIdentifiersVisitor.hpp"
+#include "DeclarationsVisitor.hpp"
 
 #include <set>
 using namespace std;
@@ -57,9 +58,13 @@ int main(int argc, const char *argv[]) {
       exit(1);
   }
 
+  // Run Declarations Analysis.
+  DeclarationsVisitor declarationsVisitor;
+  ast->accept(&declarationsVisitor);
+
 
   if(true) {
-      TIPtreeTypeConstraintVisitor visitor;
+      TIPtreeTypeConstraintVisitor visitor(declarationsVisitor.get_canonicals());
       ast->accept(&visitor);
       for(auto constraint : visitor.get_constraints()) {
           std::cout << constraint.toString() << std::endl;

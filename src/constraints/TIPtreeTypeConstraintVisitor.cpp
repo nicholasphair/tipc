@@ -23,8 +23,7 @@ void TIPtreeTypeConstraintVisitor::visit_function(TIPtree::Function  * element) 
 
     std::vector<Term *> args;
     for(auto &formal : element->FORMALS) {
-        TIPtree::VariableExpr * v = new TIPtree::VariableExpr(formal);
-        TipVar * var = new TipVar(v);
+        TipVar * var = new TipVar(&canonicals.at(formal));
         args.push_back(var);
     }
 
@@ -38,8 +37,7 @@ void TIPtreeTypeConstraintVisitor::visit_function(TIPtree::Function  * element) 
     }
 
     auto n = element->getName();
-    TIPtree::VariableExpr * name = new TIPtree::VariableExpr(n);
-    TipVar * tipVar = new TipVar(name);
+    TipVar * tipVar = new TipVar(&canonicals.at(n));
     auto ret = new TipVar(element->BODY.back().get());
     TipFunction * tipFunction = new TipFunction(args, ret);
     TypeConstraint constraint(tipVar, tipFunction);
@@ -115,8 +113,7 @@ void TIPtreeTypeConstraintVisitor::visit_allocExpr(TIPtree::AllocExpr  * element
 
 void TIPtreeTypeConstraintVisitor::visit_refExpr (TIPtree::RefExpr  * element) {
     TipVar * tipVar = new TipVar(element);
-    TIPtree::VariableExpr * name = new TIPtree::VariableExpr(element->NAME);
-    TipVar * tipVar2 = new TipVar(name);
+    TipVar * tipVar2 = new TipVar(&canonicals.at(element->NAME));
     TipRef * tipRef = new TipRef(tipVar2);
     TypeConstraint constraint(tipVar, tipRef);
     constraints.push_back(constraint);
@@ -233,3 +230,4 @@ void TIPtreeTypeConstraintVisitor::visit_blockStmt(TIPtree::BlockStmt  * element
         s->accept(this);
     }
 }
+

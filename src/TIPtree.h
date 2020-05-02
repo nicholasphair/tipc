@@ -74,15 +74,6 @@ public:
     // Getter to distinguish LHS of assigment for codegen
     std::string getName() { return NAME; };
     void accept(TIPtreeVisitor * visitor)  override;
-
-    // TIP programs make the assumption that no identifier is declared more than once.
-    bool operator==(const VariableExpr &other) const {
-        return NAME == other.NAME;
-    }
-
-    bool operator!=(const VariableExpr &other) const {
-        return !(*this == other);
-    }
 };
 
 /// BinaryExpr - class for a binary operator.

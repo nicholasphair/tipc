@@ -18,17 +18,6 @@ TEST_CASE("TipVar: test TipVars objects with different underlying node are not e
     REQUIRE_FALSE(var == var2);
 }
 
-TEST_CASE("TipVar: test me" "[TipVar]") {
- //COMPARE WITH TWO VAREXPRS!!! TODO
-    std::string name("foo");
-    TIPtree::VariableExpr vexpr(name);
-    TIPtree::VariableExpr vexpr2(name);
-    TipVar var(&vexpr);
-    TipVar var2(&vexpr2);
-
-    REQUIRE(var == var2);
-}
-
 TEST_CASE("TipVar: test TipVar is a Var" "[TipVar]") {
     TIPtree::NumberExpr n(42);
     TipVar var(&n);
