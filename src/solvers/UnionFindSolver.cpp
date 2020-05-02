@@ -10,8 +10,11 @@ UnionFindSolver::~UnionFindSolver() {
 
 void UnionFindSolver::solve() {
     for(TypeConstraint constraint: constraints) {
+        unionFind->print_edges();
+        std::cout << "--------------------" << std::endl;
         unify(constraint.lhs, constraint.rhs);
     }
+    unionFind->print_edges();
 }
 
 void UnionFindSolver::unify(Term *term1, Term *term2) {
@@ -69,7 +72,3 @@ bool UnionFindSolver::isProperType(Term * term) {
 bool UnionFindSolver::isCons(Term * term) {
     return dynamic_cast<Cons *>(term) != nullptr;
 }
-
-
-
-

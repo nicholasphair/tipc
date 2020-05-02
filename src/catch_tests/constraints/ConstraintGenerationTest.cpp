@@ -29,6 +29,12 @@ TEST_CASE("test constraint generation", "[TIPtreeTypeConstraintVisitor]") {
     for(auto tc : tcs) {
         std::cout << tc << std::endl;
     }
+
+    REQUIRE(*(tcs.at(0).rhs) == *(tcs.at(1).lhs));
+    REQUIRE(*(tcs.at(2).rhs) == *(tcs.at(3).lhs));
+    REQUIRE(*(tcs.at(2).lhs) == *(tcs.at(4).lhs));
+    REQUIRE(*(tcs.at(3).rhs) == *(tcs.at(4).rhs));
+    REQUIRE(*(tcs.at(4).lhs) == *(tcs.at(6).lhs));
     REQUIRE(tcs.size() == 8);
 }
 

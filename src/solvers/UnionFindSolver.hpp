@@ -9,6 +9,8 @@
 #include "../constraints/TypeConstraint.h"
 #include "UnionFind.h"
 #include <iostream>
+#include <unordered_set>
+#include <algorithm>
 
 class UnionFindSolver {
 public:
@@ -17,65 +19,39 @@ public:
         std::vector<Term *> terms;
         for(TypeConstraint t : constraints) {
             // TODO: SUBTERMS
-            terms.push_back(t.lhs);
-            terms.push_back(t.rhs);
-            //auto l = t.lhs;
-            //auto r = t.rhs;
+            auto l = t.lhs;
+            auto r = t.rhs;
+            terms.push_back(l);
+            terms.push_back(r);
 
-            //// --------------------------------------------------------------------------------
-            //// Safe add.
-            //// --------------------------------------------------------------------------------
-            //bool lexist = false;
-            //bool rexist = false;
-            //for(auto term : terms) {
-            //    if(term->equals(l)) {
-            //        lexist = true;
-            //    }
-            //    if(term->equals(r)) {
-            //        rexist = true;
-            //    }
-            //}
+            if(auto f1 = dynamic_cast<Cons *>(l)) {
+                for(auto a : f1->arguments) {
+                    std::cout << "adding subterm: " << a->toString() << std::endl;
+                    terms.push_back(a);
+                }
+            }
 
-            //if(!lexist) {
-            //    terms.push_back(l);
-            //}
-            //if(!rexist) {
-            //    terms.push_back(r);
-            //}
-            //// --------------------------------------------------------------------------------
-
-            //auto f1 = dynamic_cast<Cons *>(l);
-            //auto f2 = dynamic_cast<Cons *>(r);
-            //if(f1 != nullptr) {
-            //    for(auto a : f1->arguments) {
-            //        bool exists = false;
-            //        for(auto term : terms) {
-            //            if(term->equals(a)) {
-            //                exists = true;
-            //            }
-            //        }
-            //        if(!exists) {
-            //            terms.push_back(a);
-            //        }
-            //    }
-            //}
-
-            //if(f2 != nullptr) {
-            //    for(auto a : f2->arguments) {
-            //        bool exists = false;
-            //        for(auto term : terms) {
-            //            if(term->equals(a)) {
-            //                exists = true;
-            //            }
-            //        }
-            //        if(!exists) {
-            //            terms.push_back(a);
-            //        }
-            //    }
-            //}
+            if(auto f2 = dynamic_cast<Cons *>(r)) {
+                for(auto a : f2->arguments) {
+                    std::cout << "adding subterm: " << a->toString() << std::endl;
+                    terms.push_back(a);
+                }
+            }
         }
+
+        auto cmp = [](Term* a, Term* b) {return *a == *b;};
+        auto it = std::unique(terms.begin(), terms.end(), cmp);
+        terms.resize(std::distance(terms.begin(), it));
+        std::cout << "Total unique terms: " << terms.size() << std::endl;
+        for(auto t : terms) {
+            std::cout << t->toString() << std::endl;
+        }
+        std::cout << "====" << std::endl;
+
         unionFind = new UnionFind(terms);
     };
+
+
     ~UnionFindSolver();
 
     void solve();

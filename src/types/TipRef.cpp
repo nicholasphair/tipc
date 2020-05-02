@@ -17,7 +17,7 @@ std::string TipRef::toString() {
 
 bool TipRef::operator==(const Term &other) const {
     if(auto t = dynamic_cast<const TipRef *>(&other)) {
-        return of == t->of;
+        return *of == *(t->of);
     }
     return false;
 }

@@ -37,12 +37,12 @@ bool TipFunction::operator==(const Term &other) const {
         }
 
         for(int i = 0; i < arguments.size(); i++) {
-            if(arguments.at(i) != tipFunction->arguments.at(i)) {
+            if(*(arguments.at(i)) != *(tipFunction->arguments.at(i))) {
                 return false;
             }
         }
 
-        return ret == tipFunction->ret;
+        return *ret == *(tipFunction->ret);
     }
     return false;
 }

@@ -1,7 +1,3 @@
-//
-// Created by nphair on 4/30/20.
-//
-
 #ifndef TIPC_UNIONFIND_H
 #define TIPC_UNIONFIND_H
 #include <map>
@@ -16,6 +12,7 @@ public:
     Term * find(Term * t);
     void quick_union(Term * t1, Term * t2);
     bool connected(Term * t1, Term * t2);
+    void print_edges();
 private:
     // A mapping from terms to parents.
     Term * get_parent(Term *);

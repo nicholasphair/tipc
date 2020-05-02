@@ -39,3 +39,8 @@ Term *UnionFind::get_parent(Term * term) {
     return edges[term];
 }
 
+void UnionFind::print_edges() {
+    for(auto e : edges) {
+        std::cout << e.first->toString() << "--> parent(" << e.second->toString() << ")" << std::endl;
+    }
+}

@@ -3,6 +3,7 @@
 
 #include "../TIPtreeVisitor.h"
 #include <string>
+#include <TipVar.hpp>
 #include "TypeConstraint.h"
 
 class TIPtreeTypeConstraintVisitor: public TIPtreeVisitor {
@@ -37,6 +38,8 @@ public:
 private:
     std::vector<TypeConstraint> constraints;
     std::map<std::string, TIPtree::Identifier> canonicals;
+    TipVar * safeTipVarGenerate(TIPtree::Node * node);
+    TipVar * safeTipVarGenerate(std::string name);
 };
 
 #endif
