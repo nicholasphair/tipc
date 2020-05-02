@@ -1,5 +1,6 @@
 #include "TipMu.hpp"
 #include "assert.h"
+#include <iostream>
 
 TipMu::TipMu() {
     assert(0);
@@ -27,7 +28,7 @@ std::string TipMu::toString() {
 
 bool TipMu::operator==(const Term &other) const {
     if(auto mu = dynamic_cast<const TipMu *>(&other)) {
-        return v == mu->v && t == mu->v;
+        return *v == *(mu->v) && *t == *(mu->t);
     }
     return false;
 }

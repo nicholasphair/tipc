@@ -4,11 +4,6 @@
 #include "TipVar.hpp"
 #include "TipMu.hpp"
 
-TEST_CASE("TipInt: test TipInts can be instantiated", "[tip_int]") {
-    TipInt t;
-    REQUIRE(t.is_concrete());
-}
-
 TEST_CASE("TipInt: test TipInt is a Cons" "[tip_int]") {
     TipInt t;
     REQUIRE_FALSE(nullptr == dynamic_cast<Cons *>(&t));

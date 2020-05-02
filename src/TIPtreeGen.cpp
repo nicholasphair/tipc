@@ -831,4 +831,8 @@ llvm::Value *ReturnStmt::codegen() {
   return Builder.CreateRet(argVal);
 }
 
+llvm::Value *Identifier::codegen() {
+    assert(0);
+}
+
 } // namespace TIPtree

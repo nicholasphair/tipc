@@ -32,6 +32,17 @@ public:
     virtual void accept(TIPtreeVisitor  * visitor)  = 0;
 };
 
+/******************* Identifier Node. *********************/
+class Identifier : public Node {
+public:
+    Identifier(std::string VAL) : VAL(VAL) {}
+    std::string VAL;
+
+    llvm::Value *codegen() override;
+    std::string print() override;
+    void accept(TIPtreeVisitor  * visitor) override {};
+};
+
 /******************* Expression AST Nodes *********************/
 
 // Expr - Base class for all expression nodes.

@@ -3,16 +3,29 @@
 #include "TipMu.hpp"
 #include "TipVar.hpp"
 
-TEST_CASE("TipMu: test TipMu can be instantiated", "[tip_mu]") {
+TEST_CASE("TipMu: test TipMus are compared by their underlying t and v" "[TipMu]") {
     TipInt term;
     TIPtree::NumberExpr n(42);
     TipVar var(&n);
 
     TipMu mu(&var, &term);
-    REQUIRE(mu.is_concrete());
+    TipMu mu2(&var, &term);
+    REQUIRE(mu == mu2);
 }
 
-TEST_CASE("TipMu: test TipMu is a Mu" "[tip_mu]") {
+TEST_CASE("TipMu: test not equals" "[TipMu]") {
+    TipInt term;
+    TIPtree::NumberExpr n(42);
+    TIPtree::NumberExpr n2(42);
+    TipVar var(&n);
+    TipVar var2(&n2);
+
+    TipMu mu(&var, &term);
+    TipMu mu2(&var2, &term);
+    REQUIRE(mu != mu2);
+}
+
+TEST_CASE("TipMu: test TipMu is a Mu" "[TipMu]") {
     TipInt term;
     TIPtree::NumberExpr n(42);
     TipVar var(&n);
@@ -21,7 +34,7 @@ TEST_CASE("TipMu: test TipMu is a Mu" "[tip_mu]") {
     REQUIRE_FALSE(nullptr == dynamic_cast<Mu *>(&mu));
 }
 
-TEST_CASE("TipMu: test TipMu is a TipType" "[tip_mu]") {
+TEST_CASE("TipMu: test TipMu is a TipType" "[TipMu]") {
     TipInt term;
     TIPtree::NumberExpr n(42);
     TipVar var(&n);
@@ -30,7 +43,7 @@ TEST_CASE("TipMu: test TipMu is a TipType" "[tip_mu]") {
     REQUIRE_FALSE(nullptr == dynamic_cast<TipType *>(&mu));
 }
 
-TEST_CASE("TipMu: test TipMu is not a Var or Cons" "[tip_mu]") {
+TEST_CASE("TipMu: test TipMu is not a Var or Cons" "[TipMu]") {
     TipInt term;
     TIPtree::NumberExpr n(42);
     TipVar var(&n);
@@ -40,7 +53,7 @@ TEST_CASE("TipMu: test TipMu is not a Var or Cons" "[tip_mu]") {
     REQUIRE_FALSE(nullptr == dynamic_cast<Cons *>(&mu));
 }
 
-TEST_CASE("TipMu: test this is returned when substitute equals member v", "[tip_mu]") {
+TEST_CASE("TipMu: test this is returned when substitute equals member v", "[TipMu]") {
     TipInt term;
     TIPtree::NumberExpr n(42);
     TipVar var(&n);
@@ -53,9 +66,3 @@ TEST_CASE("TipMu: test this is returned when substitute equals member v", "[tip_
     REQUIRE(actual == expected);
     REQUIRE_FALSE(nullptr == dynamic_cast<Mu *>(actual));
 }
-
-TEST_CASE("TipMu: test the other case", "[tip_mu]") {
-    // TODO
-    REQUIRE(true);
-}
-

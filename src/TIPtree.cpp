@@ -1,4 +1,6 @@
 #include "TIPtreeVisitor.h"
+#include "TIPtree.h"
+
 
 void TIPtree::NumberExpr::accept(TIPtreeVisitor  * visitor)  {
     visitor->visit_numberExpr(this);

@@ -179,4 +179,6 @@ std::string ErrorStmt::print() { return "error " + ARG->print() + ";"; }
 
 std::string ReturnStmt::print() { return "return " + ARG->print() + ";"; }
 
+std::string Identifier::print() { return VAL; }
+
 } // namespace TIPtree

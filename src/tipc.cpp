@@ -51,9 +51,10 @@ int main(int argc, const char *argv[]) {
   if(!uniqueIdentifiersVisitor.all_identifiers_unique()) {
       std::cerr << "ERROR: the following identifiers conflict with a previously observed identifier:\n" ;
       for(auto dup : uniqueIdentifiersVisitor.get_conflicting_identifiers()) {
-          std::cerr << dup.first << ":" << dup.second << "\n";
+          std::cerr << dup.first << " at line " << dup.second << "\n";
       }
       std::cerr << "tip assumes that no identifier in a program is declared more than once" << std::endl;
+      exit(1);
   }
 
 
