@@ -25,6 +25,7 @@ void UnionFindSolver::unify(Term *term1, Term *term2) {
     std::cout << "unifying " << term1->toString() << " and " << term2->toString() << std::endl;
     auto rep1 = unionFind->find(term1);
     auto rep2 = unionFind->find(term2);
+    std::cout << "   parents are " << rep1->toString() << " and " << rep2->toString() << std::endl;
 
     if(rep1 == nullptr || rep2 == nullptr) {
         throw UnificationError("one or both of these terms is not in the structure");
@@ -51,7 +52,6 @@ void UnionFindSolver::unify(Term *term1, Term *term2) {
         for(int i = 0; i < f1->arguments.size(); i++) {
             auto a1 = f1->arguments.at(i);
             auto a2 = f2->arguments.at(i);
-            std::cout << "Unifying subterms " << a1->toString() << " and " << a2->toString();
             unify(a1, a2);
         }
     } else {
@@ -61,7 +61,9 @@ void UnionFindSolver::unify(Term *term1, Term *term2) {
 
 void UnionFindSolver::throwUnifyException(Term * term1, Term * term2) {
     std::stringstream s;
-    s << "Cannot unify " << term1->toString() << "and " << term2->toString();
+    s << "Cannot unify " << term1->toString() << "and " << term2->toString() <<
+        "(respective roots are: " << unionFind->find(term1)->toString() << " and " <<
+        unionFind->find(term2)->toString() << ")";
     throw UnificationError(s.str().c_str());
 }
 

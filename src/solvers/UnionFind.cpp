@@ -29,7 +29,7 @@ void UnionFind::quick_union(Term *t1, Term *t2) {
     Term * t1_root = find(t1);
     Term * t2_root = find(t2);
     if(t1_root == nullptr || t2_root == nullptr) {
-        std::cout << "can't union elements not in structure" << std::endl;
+        std::cerr << "can't union elements not in structure" << std::endl;
         assert(0);
     }
 
@@ -48,9 +48,7 @@ Term *UnionFind::get_parent(Term * term) {
 }
 
 void UnionFind::print_edges() {
-    std::cout << "EDGES SIZE: " << edges.size() << std::endl;
     for(auto e : edges) {
-        //std::cout << e.first->toString() << "--> parent(" << e.second->toString() << ")" << std::endl;
-        std::cout << e.first->toString() << "--> parent(" << find(e.first)->toString() << ")" << std::endl;
+        std::cout << e.first->toString() << " --> " << find(e.first)->toString() << ")" << std::endl;
     }
 }

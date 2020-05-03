@@ -13,8 +13,7 @@ std::string TipAlpha::toString() {
 
 bool TipAlpha::operator==(const Term &other) const {
     if(auto t = dynamic_cast<const TipAlpha *>(&other)) {
-        // TODO:
-        return x.type() == t->x.type();
+        return x == t->x;
     }
     return false;
 }

@@ -8,7 +8,7 @@
 
 class TipFunction: public TipType, public Cons {
 public:
-    TipFunction();
+    TipFunction() = delete;
     TipFunction(std::vector<Term *> params, Term * ret): params(std::move(params)), ret(ret) {
         for(auto p : params) {
             arguments.push_back(p);

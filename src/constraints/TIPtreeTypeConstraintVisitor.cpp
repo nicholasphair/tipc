@@ -11,16 +11,27 @@ std::vector<TypeConstraint> TIPtreeTypeConstraintVisitor::get_constraints() {
 }
 
 void TIPtreeTypeConstraintVisitor::visit_program(TIPtree::Program  *element) {
-    std::cout << "visit_program" << std::endl;
     for (auto &fn : element->FUNCTIONS) {
         fn->accept(this);
+
+        if(fn->NAME == "main") {
+            for(auto &formal : fn->FORMALS) {
+                TipVar * var = safeTipVarGenerate(formal);
+                TipInt * tipInt = new TipInt();
+                TypeConstraint constraint(var, tipInt);
+                constraints.push_back(constraint);
+            }
+            auto ret = safeTipVarGenerate(fn->BODY.back().get());
+            TipInt * tipInt = new TipInt();
+            TypeConstraint constraint(ret, tipInt);
+            constraints.push_back(constraint);
+        }
+
     }
 }
 
 // Function declaration
 void TIPtreeTypeConstraintVisitor::visit_function(TIPtree::Function  * element) {
-    std::cout << "visit_function" << std::endl;
-
     std::vector<Term *> args;
     for(auto &formal : element->FORMALS) {
         TipVar * var = safeTipVarGenerate(formal);
@@ -52,7 +63,6 @@ void TIPtreeTypeConstraintVisitor::visit_numberExpr(TIPtree::NumberExpr * elemen
 
 void TIPtreeTypeConstraintVisitor::visit_variableExpr(TIPtree::VariableExpr * element) {
     //  Leaf node that is a variable. We cannot make any claim about the type of this expression.
-    //std::cout << "visit_variableExpr" << std::endl;
 }
 
 void TIPtreeTypeConstraintVisitor::visit_binaryExpr(TIPtree::BinaryExpr  * element) {
@@ -80,7 +90,6 @@ void TIPtreeTypeConstraintVisitor::visit_binaryExpr(TIPtree::BinaryExpr  * eleme
         constraints.push_back(constraint6);
     }
 
-    std::cout << "visit_binaryExpr" << std::endl;
     element->LHS->accept(this);
     element->RHS->accept(this);
 }
@@ -93,11 +102,19 @@ void TIPtreeTypeConstraintVisitor::visit_inputExpr(TIPtree::InputExpr  * element
 }
 
 void TIPtreeTypeConstraintVisitor::visit_funAppExpr (TIPtree::FunAppExpr  * element) {
-    std::cout << "visit_funAppExpr" << std::endl;
+    TipVar * tipVar = safeTipVarGenerate(element);
+
     element->FUN->accept(this);
+    std::vector<Term *> actuals;
     for (auto  &arg : element->ACTUALS) {
         arg->accept(this);
+        actuals.push_back(safeTipVarGenerate(arg.get()));
     }
+
+    TipVar * application = safeTipVarGenerate(element->FUN.get());
+    TipFunction * f = new TipFunction(actuals, application);
+    TypeConstraint constraint(tipVar, f);
+    constraints.push_back(constraint);
 }
 
 void TIPtreeTypeConstraintVisitor::visit_allocExpr(TIPtree::AllocExpr  * element) {
@@ -130,7 +147,7 @@ void TIPtreeTypeConstraintVisitor::visit_deRefExpr (TIPtree::DeRefExpr * element
 
 void TIPtreeTypeConstraintVisitor::visit_nullExpr(TIPtree::NullExpr  * element) {
     TipVar * tipVar = safeTipVarGenerate(element);
-    TipAlpha * tipAlpha = new TipAlpha();
+    TipAlpha * tipAlpha = new TipAlpha("");
     TipRef * tipRef = new TipRef(tipAlpha);
     TypeConstraint constraint(tipVar, tipRef);
     constraints.push_back(constraint);
@@ -138,7 +155,6 @@ void TIPtreeTypeConstraintVisitor::visit_nullExpr(TIPtree::NullExpr  * element) 
 
 void TIPtreeTypeConstraintVisitor::visit_declStmt(TIPtree::DeclStmt  * element) {
     // Variable Declarations make no constraints.
-    //std::cout << "visit_declStmt" << std::endl;
 }
 
 void TIPtreeTypeConstraintVisitor::visit_assignStmt (TIPtree::AssignStmt  * element) {
@@ -197,34 +213,28 @@ void TIPtreeTypeConstraintVisitor::visit_outputStmt(TIPtree::OutputStmt  * eleme
 
 void TIPtreeTypeConstraintVisitor::visit_returnStmt(TIPtree::ReturnStmt  * element) {
     // We cannot say anything about a return stmt.
-    //std::cout << "visit_returnStmt" << std::endl;
     element->ARG->accept(this);
 }
 
 void TIPtreeTypeConstraintVisitor::visit_fieldExpr(TIPtree::FieldExpr  * element) {
-    std::cout << "visit_fieldExp" << std::endl;
     element->INIT->accept(this);
 }
 
 void TIPtreeTypeConstraintVisitor::visit_recordExpr(TIPtree::RecordExpr  * element) {
-    std::cout << "visit_recordEpr" << std::endl;
     for (auto  &field : element->FIELDS) {
         field->accept(this);
     }
 }
 
 void TIPtreeTypeConstraintVisitor::visit_accessExpr(TIPtree::AccessExpr  * element) {
-    std::cout << "visit_accessExp" << std::endl;
     element->RECORD->accept(this);
 }
 
 void TIPtreeTypeConstraintVisitor::visit_errorStmt(TIPtree::ErrorStmt  * element) {
-    std::cout << "visit_errorStmt" << std::endl;
     element->ARG->accept(this);
 }
 
 void TIPtreeTypeConstraintVisitor::visit_blockStmt(TIPtree::BlockStmt  * element) {
-    std::cout << "visit_blockStm" << std::endl;
     for (auto  &s : element->STMTS) {
         s->accept(this);
     }
@@ -235,36 +245,8 @@ TipVar * TIPtreeTypeConstraintVisitor::safeTipVarGenerate(std::string name) {
 }
 
 TipVar * TIPtreeTypeConstraintVisitor::safeTipVarGenerate(TIPtree::Node * node) {
-    // function, -- no because generated from componenst strings
-    // numberexpr, -- yes node itself
-    // variableexpr, --yes
-    // inputexpr, -- yes node itself
-    // alloc, --
-    // ref,
-    // null,
-    // decl
-    // THIS IS NOT EXHAUSTIVE...
-    // If the node  has a canonical representation use it..
     if(canonicals.count(node->print()) != 0) {
         return new TipVar(&canonicals.at(node->print()));
     }
-
-    //if(auto expr = dynamic_cast<TIPtree::NumberExpr *>(node)) {
-    //    return new TipVar(&canonicals.at(expr->print()));
-    //}else if(auto expr = dynamic_cast<TIPtree::VariableExpr *>(node)) {
-    //    return new TipVar(&canonicals.at(expr->print()));
-    //} else if(auto expr = dynamic_cast<TIPtree::InputExpr *>(node)) {
-    //    return new TipVar(&canonicals.at(expr->print()));
-    //} else if(auto expr = dynamic_cast<TIPtree::AllocExpr *>(node)) {
-    //    return new TipVar(&canonicals.at(expr->print()));
-    //} else if(auto expr = dynamic_cast<TIPtree::RefExpr *>(node)) {
-    //    return new TipVar(&canonicals.at(expr->print()));
-    //} else if(auto expr = dynamic_cast<TIPtree::NullExpr *>(node)) {
-    //    return new TipVar(&canonicals.at(expr->print()));
-    //} else if(auto expr = dynamic_cast<TIPtree::DeclStmt *>(node)) {
-    //    //return new TipVar(&canonicals.at(expr->NAME));
-    //    assert(0);
-    //}
-
     return new TipVar(node);
 }

@@ -10,13 +10,13 @@
 class TipAlpha: public TipType, public Var {
 public:
     TipAlpha() = default;
-    TipAlpha(std::any x): x(std::move(x)) {};
+    TipAlpha(std::string x): x(std::move(x)) {};
     std::string toString() override;
     virtual bool operator==(const Term& other) const override;
     virtual bool operator!=(const Term& other) const override;
 
 private:
-    std::any x;
+    std::string x;
 
 };
 

@@ -3,10 +3,6 @@
 #include "assert.h"
 #include <sstream>
 
-TipFunction::TipFunction() {
-    assert(0);
-}
-
 Term *TipFunction::substitute(Term *var, Term *term) {
     if(Var * sv = dynamic_cast<Var *>(var)) {
         std::vector<Term *> new_params;
