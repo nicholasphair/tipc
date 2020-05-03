@@ -18,7 +18,10 @@ Term *UnionFind::find(Term *t) {
     while(*get_parent(parent) != *parent) {
         parent = get_parent(parent);
     }
-    return parent;
+
+    // HACK (nphair): Wrap parent in a get_parent call so we don't introduce a term that
+    // is equal but not identical.
+    return get_parent(parent);
 }
 
 void UnionFind::quick_union(Term *t1, Term *t2) {

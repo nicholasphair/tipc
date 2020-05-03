@@ -34,11 +34,75 @@ TEST_CASE("test short", "[UnionFindSolver]") {
     }
     UnionFindSolver unionFindSolver(tcs);
 
-    unionFindSolver.solve();
-    REQUIRE(true);
+    REQUIRE_NOTHROW(unionFindSolver.solve());
 }
 
-TEST_CASE("test unification error", "[UnionFindSolver]") {
+TEST_CASE("test unification error 1", "[UnionFindSolver]") {
+    std::stringstream stream;
+    stream << R"(
+        bar(g,x) {
+            var r;
+            if (x==0){
+                r=g;
+            } else {
+                r=bar(2,0);
+            }
+            return r+1;
+        }
+
+        main() {
+            return bar(null,1);
+        }
+    )";
+
+    auto ast = ASTHelper::build_ast(stream);
+    DeclarationsVisitor declarationsVisitor;
+    ast->accept(&declarationsVisitor);
+
+    TIPtreeTypeConstraintVisitor typeConstraintVisitor(declarationsVisitor.get_canonicals());
+    ast->accept(&typeConstraintVisitor);
+    auto tcs = typeConstraintVisitor.get_constraints();
+    for(auto tc : tcs) {
+        std::cout << tc << std::endl;
+    }
+    std::cout << "\n\n" << std::endl;
+    UnionFindSolver unionFindSolver(tcs);
+
+    REQUIRE_THROWS_AS(unionFindSolver.solve(), UnificationError);
+}
+
+TEST_CASE("test unification error 2", "[UnionFindSolver]") {
+    std::stringstream stream;
+    stream << R"(
+        foo(p) {
+            return *p;
+        }
+
+        main() {
+            var x;
+            x = 5;
+            x = foo;
+            return 4;
+        }
+    )";
+
+    auto ast = ASTHelper::build_ast(stream);
+    DeclarationsVisitor declarationsVisitor;
+    ast->accept(&declarationsVisitor);
+
+    TIPtreeTypeConstraintVisitor typeConstraintVisitor(declarationsVisitor.get_canonicals());
+    ast->accept(&typeConstraintVisitor);
+    auto tcs = typeConstraintVisitor.get_constraints();
+    for(auto tc : tcs) {
+        std::cout << tc << std::endl;
+    }
+    std::cout << "\n\n" << std::endl;
+    UnionFindSolver unionFindSolver(tcs);
+
+    REQUIRE_THROWS_AS(unionFindSolver.solve(), UnificationError);
+}
+
+TEST_CASE("test unification error 3", "[UnionFindSolver]") {
     std::stringstream stream;
     stream << R"(
         main() {
@@ -63,9 +127,9 @@ TEST_CASE("test unification error", "[UnionFindSolver]") {
     std::cout << "\n\n" << std::endl;
     UnionFindSolver unionFindSolver(tcs);
 
-    unionFindSolver.solve();
-    REQUIRE(true);
+    REQUIRE_THROWS_AS(unionFindSolver.solve(), UnificationError);
 }
+
 
 TEST_CASE("test unifying cons with different arity", "[UnionFindSolver]") {
     TestNCons oneCons(1);
