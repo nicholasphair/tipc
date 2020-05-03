@@ -10,11 +10,11 @@ UnionFind::UnionFind(std::vector<Term *> seed) {
 }
 
 Term *UnionFind::find(Term *t) {
-    Term * parent = get_parent(t);
-    if(!parent) {
+    if(!get_parent(t)) {
         assert(0);
     }
 
+    Term * parent = t;
     while(*get_parent(parent) != *parent) {
         parent = get_parent(parent);
     }
@@ -22,8 +22,9 @@ Term *UnionFind::find(Term *t) {
 }
 
 void UnionFind::quick_union(Term *t1, Term *t2) {
-    Term * t1_root = get_parent(t1);
-    Term * t2_root = get_parent(t2);
+    // FIXME this should be calling find...
+    Term * t1_root = find(t1);
+    Term * t2_root = find(t2);
     if(t1_root == nullptr || t2_root == nullptr) {
         std::cout << "can't union elements not in structure" << std::endl;
         assert(0);
@@ -37,12 +38,16 @@ bool UnionFind::connected(Term *t1, Term *t2) {
 }
 
 Term *UnionFind::get_parent(Term * term) {
-    return edges[term];
+    for(auto t : edges) {
+        if(*t.first == *term) return t.second;
+    }
+    assert(0);
 }
 
 void UnionFind::print_edges() {
     std::cout << "EDGES SIZE: " << edges.size() << std::endl;
     for(auto e : edges) {
-        std::cout << e.first->toString() << "--> parent(" << e.second->toString() << ")" << std::endl;
+        //std::cout << e.first->toString() << "--> parent(" << e.second->toString() << ")" << std::endl;
+        std::cout << e.first->toString() << "--> parent(" << find(e.first)->toString() << ")" << std::endl;
     }
 }

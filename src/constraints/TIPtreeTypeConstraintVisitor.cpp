@@ -235,9 +235,36 @@ TipVar * TIPtreeTypeConstraintVisitor::safeTipVarGenerate(std::string name) {
 }
 
 TipVar * TIPtreeTypeConstraintVisitor::safeTipVarGenerate(TIPtree::Node * node) {
-    if(auto variableExpr = dynamic_cast<TIPtree::VariableExpr *>(node)) {
-        return new TipVar(&canonicals.at(variableExpr->NAME));
+    // function, -- no because generated from componenst strings
+    // numberexpr, -- yes node itself
+    // variableexpr, --yes
+    // inputexpr, -- yes node itself
+    // alloc, --
+    // ref,
+    // null,
+    // decl
+    // THIS IS NOT EXHAUSTIVE...
+    // If the node  has a canonical representation use it..
+    if(canonicals.count(node->print()) != 0) {
+        return new TipVar(&canonicals.at(node->print()));
     }
+
+    //if(auto expr = dynamic_cast<TIPtree::NumberExpr *>(node)) {
+    //    return new TipVar(&canonicals.at(expr->print()));
+    //}else if(auto expr = dynamic_cast<TIPtree::VariableExpr *>(node)) {
+    //    return new TipVar(&canonicals.at(expr->print()));
+    //} else if(auto expr = dynamic_cast<TIPtree::InputExpr *>(node)) {
+    //    return new TipVar(&canonicals.at(expr->print()));
+    //} else if(auto expr = dynamic_cast<TIPtree::AllocExpr *>(node)) {
+    //    return new TipVar(&canonicals.at(expr->print()));
+    //} else if(auto expr = dynamic_cast<TIPtree::RefExpr *>(node)) {
+    //    return new TipVar(&canonicals.at(expr->print()));
+    //} else if(auto expr = dynamic_cast<TIPtree::NullExpr *>(node)) {
+    //    return new TipVar(&canonicals.at(expr->print()));
+    //} else if(auto expr = dynamic_cast<TIPtree::DeclStmt *>(node)) {
+    //    //return new TipVar(&canonicals.at(expr->NAME));
+    //    assert(0);
+    //}
 
     return new TipVar(node);
 }

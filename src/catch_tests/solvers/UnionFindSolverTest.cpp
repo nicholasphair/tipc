@@ -29,6 +29,9 @@ TEST_CASE("test short", "[UnionFindSolver]") {
     ast->accept(&typeConstraintVisitor);
     auto tcs = typeConstraintVisitor.get_constraints();
 
+    for(auto tc : tcs) {
+        std::cout << tc << std::endl;
+    }
     UnionFindSolver unionFindSolver(tcs);
 
     unionFindSolver.solve();

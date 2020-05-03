@@ -9,11 +9,15 @@ UnionFindSolver::~UnionFindSolver() {
 }
 
 void UnionFindSolver::solve() {
+    std::cout << "solving" << std::endl;
+    unionFind->print_edges();
     for(TypeConstraint constraint: constraints) {
-        unionFind->print_edges();
         std::cout << "--------------------" << std::endl;
         unify(constraint.lhs, constraint.rhs);
+        unionFind->print_edges();
     }
+    std::cout << "--------------------" << std::endl;
+    std::cout << "done solving" << std::endl;
     unionFind->print_edges();
 }
 

@@ -1,3 +1,4 @@
+#include <TipVar.hpp>
 #include "catch.hpp"
 #include "MockTerms.h"
 #include "UnionFind.h"
@@ -25,6 +26,25 @@ TEST_CASE("test find", "[UnionFind]") {
     REQUIRE(unionFind.find(&t2) == &t2);
     REQUIRE(unionFind.find(&t3) == &t3);
     REQUIRE(unionFind.find(&t4) == &t4);
+}
+
+TEST_CASE("test find 2", "[UnionFind]") {
+    TIPtree::Identifier id3("3");
+    TIPtree::Identifier id4("4");
+    TIPtree::Identifier id8("8");
+
+    TipVar var3(&id3);
+    TipVar var4(&id4);
+    TipVar var8(&id8);
+    std::vector<Term *> seed {&var3, &var4, &var8};
+
+    UnionFind unionFind(seed);
+    unionFind.print_edges();
+    unionFind.quick_union(&var4, &var3);
+    unionFind.print_edges();
+    unionFind.quick_union(&var4, &var8);
+    unionFind.print_edges();
+    REQUIRE(unionFind.find(&var4) == &var8);
 }
 
 TEST_CASE("test union", "[UnionFind]") {
