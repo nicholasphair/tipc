@@ -41,8 +41,6 @@ public:
             if(add) unique.push_back(std::move(t));
         }
 
-        std::cout << "size of terms = " << unique.size() << std::endl;
-
         unionFind = new UnionFind(unique);
     };
 

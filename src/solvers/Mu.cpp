@@ -1,4 +1,5 @@
 #include "Mu.hpp"
+#include <sstream>
 
 std::set<Term *> Mu::free_variables() {
     auto s1 = t->free_variables();
@@ -6,8 +7,9 @@ std::set<Term *> Mu::free_variables() {
     return s1;
 }
 
-//std::string Mu::toString() {
-//    // TODO: make this meaningful.
-//    return "\u03bc$v.$t";
-//}
+std::string Mu::toString() {
+    std::stringstream s;
+    s << "\u03bc" << v->toString() << "." <<  t->toString();
+    return s.str();
+}
 

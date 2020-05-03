@@ -5,7 +5,6 @@
 
 class TipType {
 public:
-    //TipType() = delete;
     virtual std::string toString() = 0;
 };
 

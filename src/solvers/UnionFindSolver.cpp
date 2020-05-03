@@ -9,27 +9,15 @@ UnionFindSolver::~UnionFindSolver() {
 }
 
 void UnionFindSolver::solve() {
-    std::cout << "solving" << std::endl;
-    unionFind->print_edges();
     for(TypeConstraint constraint: constraints) {
-        std::cout << "--------------------" << std::endl;
         unify(constraint.lhs, constraint.rhs);
-        unionFind->print_edges();
     }
-    std::cout << "--------------------" << std::endl;
-    std::cout << "done solving" << std::endl;
-    unionFind->print_edges();
 }
 
 void UnionFindSolver::unify(Term *term1, Term *term2) {
     std::cout << "unifying " << term1->toString() << " and " << term2->toString() << std::endl;
     auto rep1 = unionFind->find(term1);
     auto rep2 = unionFind->find(term2);
-    std::cout << "   parents are " << rep1->toString() << " and " << rep2->toString() << std::endl;
-
-    if(rep1 == nullptr || rep2 == nullptr) {
-        throw UnificationError("one or both of these terms is not in the structure");
-    }
 
     if(rep1 == rep2) {
        return;

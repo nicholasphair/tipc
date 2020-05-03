@@ -6,7 +6,6 @@ UnionFind::UnionFind(std::vector<Term *> seed) {
     for(auto term : seed) {
         edges.insert(std::pair<Term *, Term *>(term, term));
     }
-    std::cout << "EDGES SIZE: " << edges.size() << std::endl;
 }
 
 Term *UnionFind::find(Term *t) {
@@ -25,7 +24,6 @@ Term *UnionFind::find(Term *t) {
 }
 
 void UnionFind::quick_union(Term *t1, Term *t2) {
-    // FIXME this should be calling find...
     Term * t1_root = find(t1);
     Term * t2_root = find(t2);
     if(t1_root == nullptr || t2_root == nullptr) {

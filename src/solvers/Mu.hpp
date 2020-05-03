@@ -11,7 +11,7 @@ public:
     Term * t;
 
     std::set<Term *> free_variables() override;
-    //std::string toString();
+    virtual std::string toString() override;
 };
 
 #endif /* MU_HPP */
