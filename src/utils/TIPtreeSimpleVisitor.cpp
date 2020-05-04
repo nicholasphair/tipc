@@ -69,20 +69,20 @@ void TIPtreeSimpleVisitor::visit_declStmt(TIPtree::DeclStmt  * element) {
 
 void TIPtreeSimpleVisitor::visit_assignStmt (TIPtree::AssignStmt  * element) {
     std::cout << "visit_assignStmt" << std::endl;
-    element->LHS->print();
-    element->RHS->print();
+    element->LHS->accept(this);
+    element->RHS->accept(this);
 }
 
 void TIPtreeSimpleVisitor::visit_whileStmt(TIPtree::WhileStmt  * element) {
     std::cout << "visit_whileStmt" << std::endl;
     element->COND->accept(this);
-    element->BODY->print();
+    element->BODY->accept(this);
 }
 
 void TIPtreeSimpleVisitor::visit_ifStmt(TIPtree::IfStmt  * element) {
     std::cout << "visit_ifStmt" << std::endl;
-    element->COND->print();
-    element->THEN->print();
+    element->COND->accept(this);
+    element->THEN->accept(this);
 
     if (element->ELSE != nullptr) {
         element->ELSE->accept(this);
@@ -122,7 +122,7 @@ void TIPtreeSimpleVisitor::visit_errorStmt(TIPtree::ErrorStmt  * element) {
 }
 
 void TIPtreeSimpleVisitor::visit_blockStmt(TIPtree::BlockStmt  * element) {
-    std::cout << "visit_blockStm" << std::endl;
+    std::cout << "visit_blockStmt" << std::endl;
     for (auto  &s : element->STMTS) {
         s->accept(this);
     }

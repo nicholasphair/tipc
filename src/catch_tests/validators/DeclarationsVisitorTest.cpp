@@ -23,7 +23,7 @@ TEST_CASE("test each identifier is represented", "[DeclarationsVisitor]") {
     ast->accept(&visitor);
     auto canonicals = visitor.get_canonicals();
 
-    REQUIRE(canonicals.size() == 4);
+    REQUIRE(canonicals.size() == 5);
     REQUIRE(canonicals.count("x") != 0);
     REQUIRE(canonicals.count("y") != 0);
     REQUIRE(canonicals.count("main") != 0);

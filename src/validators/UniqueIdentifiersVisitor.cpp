@@ -3,8 +3,6 @@
 #include <iostream>
 
 void UniqueIdentifiersVisitor::visit_program(TIPtree::Program  *element) {
-
-
     for (auto &fn : element->FUNCTIONS) {
         fn->accept(this);
     }
@@ -17,7 +15,6 @@ void UniqueIdentifiersVisitor::visit_function(TIPtree::Function  * element) {
     if(function_has_been_seen(name)) {
         conflicts.emplace_back(std::make_pair(name, line));
     }
-    //seen_function_names.insert(name);
     seen.insert(name);
 
     for(auto &formal : element->FORMALS) {
@@ -77,7 +74,6 @@ void UniqueIdentifiersVisitor::visit_declStmt(TIPtree::DeclStmt  * element) {
         if(decl_has_been_seen(name)) {
             conflicts.emplace_back(std::make_pair(name, line));
         }
-        //seen_decls.insert(name);
         seen.insert(name);
     }
 }
@@ -135,17 +131,14 @@ void UniqueIdentifiersVisitor::visit_blockStmt(TIPtree::BlockStmt  * element) {
 
 bool UniqueIdentifiersVisitor::function_has_been_seen(std::string function_name) {
     return seen.count(function_name) != 0;
-    //return seen_function_names.count(function_name) != 0;
 }
 
 bool UniqueIdentifiersVisitor::decl_has_been_seen(std::string decl) {
     return seen.count(decl) != 0;
-    //return seen_decls.count(decl) != 0;
 }
 
 bool UniqueIdentifiersVisitor::arg_has_been_seen(std::string arg) {
     return seen.count(arg) != 0;
-    //return seen_args.count(arg) != 0;
 }
 
 bool UniqueIdentifiersVisitor::all_identifiers_unique() {

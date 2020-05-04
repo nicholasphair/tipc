@@ -131,26 +131,6 @@ TEST_CASE("test unification error 3", "[UnionFindSolver]") {
 }
 
 
-TEST_CASE("test unifying cons with different arity", "[UnionFindSolver]") {
-    TestNCons oneCons(1);
-    TestNCons twoCons(2);
-    TypeConstraint constraint(&oneCons, &twoCons);
-    std::vector<TypeConstraint> constraints {constraint};
-
-    UnionFindSolver solver(constraints);
-    REQUIRE_THROWS_AS(solver.unify(&oneCons, &twoCons), UnificationError);
-}
-
-TEST_CASE("test unifying two different proper types", "[UnionFindSolver]") {
-    TestTerm t1;
-    TestTerm t2;
-    TypeConstraint constraint(&t1, &t2);
-    std::vector<TypeConstraint> constraints {constraint};
-
-    UnionFindSolver solver(constraints);
-    REQUIRE_THROWS_AS(solver.unify(&t1, &t2), UnificationError);
-}
-
 TEST_CASE("test unifying proper types and termvar", "[UnionFindSolver]") {
     TestTerm t1;
     TestVar v1;

@@ -43,16 +43,6 @@ TEST_CASE("TipMu: test TipMu is a TipType" "[TipMu]") {
     REQUIRE_FALSE(nullptr == dynamic_cast<TipType *>(&mu));
 }
 
-TEST_CASE("TipMu: test TipMu is not a Var or Cons" "[TipMu]") {
-    TipInt term;
-    TIPtree::NumberExpr n(42);
-    TipVar var(&n);
-
-    TipMu mu(&var, &term);
-    REQUIRE_FALSE(nullptr == dynamic_cast<Var *>(&mu));
-    REQUIRE_FALSE(nullptr == dynamic_cast<Cons *>(&mu));
-}
-
 TEST_CASE("TipMu: test this is returned when substitute equals member v", "[TipMu]") {
     TipInt term;
     TIPtree::NumberExpr n(42);

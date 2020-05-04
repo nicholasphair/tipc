@@ -116,6 +116,9 @@ void DeclarationsVisitor::visit_ifStmt(TIPtree::IfStmt  * element) {
 }
 
 void DeclarationsVisitor::visit_outputStmt(TIPtree::OutputStmt  * element) {
+    auto name = element->print();
+    TIPtree::Identifier identifier(name);
+    canonicals.emplace(name, identifier);
     element->ARG->accept(this);
 }
 

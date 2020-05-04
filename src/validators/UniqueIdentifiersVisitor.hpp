@@ -38,9 +38,6 @@ private:
     bool arg_has_been_seen(std::string);
 
     std::set<std::string> seen;
-    //std::set<std::string> seen_decls;
-    //std::set<std::string> seen_args;
-    //std::set<std::string> seen_function_names;
     std::vector<std::pair<std::string, int>> conflicts;
 };
 

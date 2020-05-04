@@ -42,9 +42,3 @@ TEST_CASE("TipVar: test free_variables" "[TipVar]") {
     TipVar var(&n);
     REQUIRE(1 == var.free_variables().size());
 }
-
-TEST_CASE("TipVar: test toString returns alpha + val", "[TipVar]") {
-    TIPtree::NumberExpr n(42);
-    TipVar var(&n);
-    REQUIRE("α<42>" == var.toString());
-}
