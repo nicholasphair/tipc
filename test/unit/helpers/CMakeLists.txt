@@ -8,4 +8,4 @@ target_sources(test_helpers
         ${CMAKE_CURRENT_SOURCE_DIR}/GeneralHelper.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/GeneralHelper.h
 )
-target_link_libraries(test_helpers tipLib)
+target_link_libraries(test_helpers tip_lib)
