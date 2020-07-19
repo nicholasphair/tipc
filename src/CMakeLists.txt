@@ -11,6 +11,7 @@ SET_PROPERTY(GLOBAL PROPERTY GrammarIncludeDir ${ANTLR_TIPGrammar_OUTPUT_DIR})
 llvm_map_components_to_libnames(llvm_libs Support Core Passes)
 
 add_subdirectory(solvers)
+add_subdirectory(types)
 
 # TIP compiler datastructures and passes
 # Note: Antlr cmake files do not like modern cmake... must specify the outptus in add_library

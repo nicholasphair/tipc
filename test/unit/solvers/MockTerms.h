@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Cons.h"
-#include "Mu.h"
-#include "Term.h"
+#include "types/abstract/Cons.h"
+#include "types/abstract/Mu.h"
+#include "types/abstract/Term.h"
 #include "Var.h"
 #include <iostream>
 
