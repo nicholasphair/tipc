@@ -20,6 +20,21 @@ target_sources(types_lib PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipType.h
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipVar.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipVar.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraintVisitor.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraintVisitor.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraint.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraint.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnificationError.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnificationError.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/Unifier.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/Unifier.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnionFind.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnionFind.tpp
         )
-target_include_directories(types_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/abstract)
+target_include_directories(types_lib PUBLIC
+        ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/abstract
+        ${CMAKE_CURRENT_SOURCE_DIR}/concrete
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints
+        )
 

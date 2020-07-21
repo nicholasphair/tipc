@@ -10,7 +10,6 @@ SET_PROPERTY(GLOBAL PROPERTY GrammarIncludeDir ${ANTLR_TIPGrammar_OUTPUT_DIR})
 # list the specific LLVM libraries for this tool
 llvm_map_components_to_libnames(llvm_libs Support Core Passes)
 
-add_subdirectory(solvers)
 add_subdirectory(types)
 
 # TIP compiler datastructures and passes
