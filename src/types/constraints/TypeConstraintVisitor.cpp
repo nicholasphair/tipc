@@ -5,6 +5,8 @@
 #include "TipAlpha.h"
 #include "TipRef.h"
 #include "TipInt.h"
+// TODO: Active function variable -- that way I can look up nodes
+// TODO: Is there an invariant that at the end of each visit the stack is empty
 
 TypeConstraintVisitor::TypeConstraintVisitor(SymbolTable table): symbolTable(table) {};
 
@@ -34,21 +36,40 @@ void TypeConstraintVisitor::endVisit(AST::Program * element) {
     constraints.push_back(constraint);
 }
 
+
+bool TypeConstraintVisitor::visit(AST::Function * element) {
+    scope.push(element->getDecl());
+}
+
 // Function declaration
 void TypeConstraintVisitor::endVisit(AST::Function * element) {
-    std::vector<Term *> args;
-    for(auto &formal : element->getFormals()) {
-        auto formalDecl = symbolTable.getLocal(formal->getName(), element->getDecl());
-        TipVar * var = new TipVar(formalDecl);
-        args.push_back(var);
+    // function name, formal, declars, stmts
+    auto ret = visitResults.top();
+    for(int i = 0; i < element->getStmts().size(); i++) {
+        visitResults.pop();
     }
-    TipVar * ret = new TipVar(element->getStmts().back());
-    TipFunction * tipFunction = new TipFunction(args, ret);
 
-    TipVar * tipVar = new TipVar(element->getDecl());
+    for(int i = 0; i < element->getDeclarations().size(); i++) {
+        visitResults.pop();
+    }
 
-    TypeConstraint constraint(tipVar, tipFunction);
+    std::vector<Term *> args;
+    for(int i = 0; i < element->getFormals().size(); i++) {
+        auto formal = visitResults.top();
+        args.push_back(formal);
+        visitResults.pop();
+    }
+
+    auto tipFunction = new TipFunction(args, ret);
+
+    auto fn = visitResults.top();
+    visitResults.pop();
+    TypeConstraint constraint(fn, tipFunction);
     constraints.push_back(constraint);
+
+    auto var = new TipVar(element);
+    visitResults.push(var);
+    scope.pop();
 }
 
 // NOTE: DONE.
@@ -57,19 +78,25 @@ void TypeConstraintVisitor::endVisit(AST::NumberExpr * element) {
     TipInt * tipInt = new TipInt();
     TypeConstraint constraint(tipVar, tipInt);
     constraints.push_back(constraint);
+    visitResults.push(tipVar);
 }
 
-// NOTE: DONE.
 void TypeConstraintVisitor::endVisit(AST::VariableExpr * element) {
-    visitResults.push(element->getName());
-    //  Leaf node that is a variable. We cannot make any claim about the type of this expression.
+    // TODO: I need to be able to get my canonical form...
+    auto var = symbolTable.getLocal(element->getName(), scope.top());
+    TipVar * tipVar = new TipVar(var);
+    visitResults.push(tipVar);
 }
 
 // TODO: i think I need to use a stack.. When its a leaf and a decl push it
 void TypeConstraintVisitor::endVisit(AST::BinaryExpr  * element) {
-    TipVar * e1 = safeTipVarGenerate(element->getLeft());
-    TipVar * e2 = safeTipVarGenerate(element->getRight());
-    TipVar * e1_eq_e2 = safeTipVarGenerate(element);
+    // left is visited then right is visited.
+    auto e1 = visitResults.top();
+    visitResults.pop();
+    auto e2 = visitResults.top();
+    visitResults.pop();
+
+    TipVar * e1_eq_e2 = new TipVar(element);
     TipInt * tipInt = new TipInt();
 
     TypeConstraint constraint1(e1, e2);
@@ -91,166 +118,174 @@ void TypeConstraintVisitor::endVisit(AST::BinaryExpr  * element) {
         constraints.push_back(constraint6);
     }
 
-    element->getLeft()->accept(this);
-    element->getRight()->accept(this);
+    visitResults.push(e1_eq_e2);
 }
 
-void TypeConstraintVisitor::endVisit(AST::InputExpr  * element) {
-    TipVar * tipVar = safeTipVarGenerate(element);
+void TypeConstraintVisitor::endVisit(AST::InputExpr * element) {
+    TipVar * tipVar = new TipVar(element);
     TipInt * tipInt = new TipInt();
     TypeConstraint constraint(tipVar, tipInt);
     constraints.push_back(constraint);
+    visitResults.push(tipVar);
 }
 
+// TODO
 void TypeConstraintVisitor::endVisit(AST::FunAppExpr  * element) {
-    TipVar * tipVar = safeTipVarGenerate(element);
+    auto tipVar = new TipVar(element);
 
-    element->getFunction()->accept(this);
     std::vector<Term *> actuals;
-    for (auto  &arg : element->getActuals()) {
-        arg->accept(this);
-        actuals.push_back(safeTipVarGenerate(arg));
+    for(int i = 0; i < element->getActuals().size() - 1; i++) {
+        auto actual = visitResults.top();
+        actuals.push_back(actual);
+        visitResults.pop();
     }
 
-    TipVar * application = safeTipVarGenerate(element->getFunction());
-    TipFunction * f = new TipFunction(actuals, application);
-    TypeConstraint constraint(tipVar, f);
+    auto application = visitResults.top();
+    visitResults.pop();
+    auto function = new TipFunction(actuals, application);
+    TypeConstraint constraint(tipVar, function);
     constraints.push_back(constraint);
+    visitResults.push(tipVar);
 }
 
-void TypeConstraintVisitor::endVisit(AST::AllocExpr  * element) {
-    TipVar * tipVar = safeTipVarGenerate(element);
-    TipVar * tipVar2 = safeTipVarGenerate(element->getInitializer());
-    TipRef * tipRef = new TipRef(tipVar2);
+// DONE.
+void TypeConstraintVisitor::endVisit(AST::AllocExpr * element) {
+    auto tipVar = new TipVar(element);
+    auto tipVar2 = visitResults.top();
+    visitResults.pop();
+    auto tipRef = new TipRef(tipVar2);
     TypeConstraint constraint(tipVar, tipRef);
     constraints.push_back(constraint);
-
-    element->getInitializer()->accept(this);
+    visitResults.push(tipVar);
 }
 
-void TypeConstraintVisitor::endVisit(AST::RefExpr  * element) {
-    TipVar * tipVar = safeTipVarGenerate(element);
-    TipVar * tipVar2 = safeTipVarGenerate(&canonicals.at(element->getVar()));
-    TipRef * tipRef = new TipRef(tipVar2);
+
+void TypeConstraintVisitor::endVisit(AST::RefExpr * element) {
+    auto tipVar = new TipVar(element);
+    auto tipVar2 = visitResults.top();
+    visitResults.pop();
+    auto tipRef = new TipRef(tipVar2);
     TypeConstraint constraint(tipVar, tipRef);
     constraints.push_back(constraint);
+    visitResults.push(tipVar2);
 }
 
 void TypeConstraintVisitor::endVisit(AST::DeRefExpr * element) {
-    TipVar * tipVar = safeTipVarGenerate(element->getPtr());
-    TipVar * tipVar2 = safeTipVarGenerate(element);
-    TipRef * tipRef = new TipRef(tipVar2);
+    auto tipVar = visitResults.top();
+    visitResults.pop();
+    auto tipVar2 = new TipVar(element);
+    auto tipRef = new TipRef(tipVar2);
     TypeConstraint constraint(tipVar, tipRef);
     constraints.push_back(constraint);
-
-    element->getPtr()->accept(this);
+    visitResults.push(tipVar2);
 }
 
-void TypeConstraintVisitor::endVisit(AST::NullExpr  * element) {
-    TipVar * tipVar = safeTipVarGenerate(element);
-    TipAlpha * tipAlpha = new TipAlpha("");
-    TipRef * tipRef = new TipRef(tipAlpha);
+void TypeConstraintVisitor::endVisit(AST::NullExpr * element) {
+    // TODO: nulls need to be cannonicalized somehow.
+    auto tipVar = new TipVar(element);
+    auto tipAlpha = new TipAlpha("");
+    auto tipRef = new TipRef(tipAlpha);
     TypeConstraint constraint(tipVar, tipRef);
     constraints.push_back(constraint);
+    visitResults.push(tipVar);
 }
 
-void TypeConstraintVisitor::endVisit(AST::DeclStmt  * element) {
+void TypeConstraintVisitor::endVisit(AST::DeclStmt * element) {
+    auto tipVar = new TipVar(element);
+    visitResults.push(tipVar);
     // Variable Declarations make no constraints.
 }
 
+void TypeConstraintVisitor::endVisit(AST::DeclNode * element) {
+    auto tipVar = new TipVar(element);
+    visitResults.push(tipVar);
+}
+
 void TypeConstraintVisitor::endVisit(AST::AssignStmt  * element) {
-    auto lhs = element->getLHS();
-    auto rhs = element->getRHS();
+    // visit left then visit right
+    auto rhs = visitResults.top();
+    visitResults.pop();
+    auto lhs = visitResults.top();
+    visitResults.pop();
 
-    if(auto l = dynamic_cast<AST::DeRefExpr *>(lhs)) {
-        TipVar * lvar = safeTipVarGenerate(l->getPtr());
-        TipVar * rvar = safeTipVarGenerate(element->getRHS());
-        TipRef * rref = new TipRef(rvar);
-        TypeConstraint constraint(lvar, rref);
-        constraints.push_back(constraint);
-    } else {
-        TipVar * lvar = safeTipVarGenerate(element->getLHS());
-        TipVar * rvar = safeTipVarGenerate(element->getRHS());
-        TypeConstraint constraint(lvar, rvar);
-        constraints.push_back(constraint);
+    TypeConstraint constraint(lhs, rhs);
+    constraints.push_back(constraint);
 
-        //element->LHS->accept(this);
-    }
-    element->getRHS()->accept(this);
+    // NOTE: I think this is right..
+    auto tipVar = new TipVar(element);
+    visitResults.push(tipVar);
 }
 
-void TypeConstraintVisitor::endVisit(AST::WhileStmt  * element) {
-    TipVar * tipVar = safeTipVarGenerate(element->getCondition());
+void TypeConstraintVisitor::endVisit(AST::WhileStmt * element) {
+    // TODO: Confirm that this is the condition.
+    auto tipVar = visitResults.top();
+    visitResults.pop();
     TipInt * tipInt = new TipInt();
     TypeConstraint constraint(tipVar, tipInt);
     constraints.push_back(constraint);
 
-    element->getCondition()->accept(this);
-    element->getBody()->accept(this);
+    auto var = new TipVar(element);
+    visitResults.push(var);
 }
 
-void TypeConstraintVisitor::endVisit(AST::IfStmt  * element) {
-    TipVar * tipVar = safeTipVarGenerate(element->getCondition());
+void TypeConstraintVisitor::endVisit(AST::IfStmt * element) {
+    // TODO: verify this is the condition..
+    auto tipVar = visitResults.top();
+    visitResults.pop();
     TipInt * tipInt = new TipInt();
     TypeConstraint constraint(tipVar, tipInt);
     constraints.push_back(constraint);
 
-    element->getCondition()->accept(this);
-    element->getCondition()->accept(this);
-
-    if (element->getElse() != nullptr) {
-        element->getElse()->accept(this);
-    }
+    auto var = new TipVar(element);
+    visitResults.push(var);
 }
 
-void TypeConstraintVisitor::endVisit(AST::OutputStmt  * element) {
-    TipVar * tipVar = safeTipVarGenerate(element->getArg());
-    TipInt * tipInt = new TipInt();
+void TypeConstraintVisitor::endVisit(AST::OutputStmt * element) {
+    auto tipVar = visitResults.top();
+    visitResults.pop();
+    auto tipInt = new TipInt();
     TypeConstraint constraint(tipVar, tipInt);
     constraints.push_back(constraint);
 
-    element->getArg()->accept(this);
+    auto var = new TipVar(element);
+    visitResults.push(var);
 }
 
-void TypeConstraintVisitor::endVisit(AST::ReturnStmt  * element) {
-    // We cannot say anything about a return stmt.
-    element->getArg()->accept(this);
+void TypeConstraintVisitor::endVisit(AST::ReturnStmt * element) {
+    auto var = new TipVar(element);
+    visitResults.push(var);
 }
 
 void TypeConstraintVisitor::endVisit(AST::FieldExpr  * element) {
-    element->getInitializer()->accept(this);
+    // NOT IMPLEMENTED.
+    assert(0);
 }
 
-void TypeConstraintVisitor::endVisit(AST::RecordExpr  * element) {
-    for (auto  &field : element->getFields()) {
-        field->accept(this);
-    }
+void TypeConstraintVisitor::endVisit(AST::RecordExpr * element) {
+    // NOT IMPLEMENTED.
+    assert(0);
 }
 
-void TypeConstraintVisitor::endVisit(AST::AccessExpr  * element) {
-    element->getRecord()->accept(this);
+void TypeConstraintVisitor::endVisit(AST::AccessExpr * element) {
+    // NOT IMPLEMENTED.
+    assert(0);
 }
 
-void TypeConstraintVisitor::endVisit(AST::ErrorStmt  * element) {
-    element->getArg()->accept(this);
+void TypeConstraintVisitor::endVisit(AST::ErrorStmt * element) {
+    // TODO
+    assert(0);
+    auto tipVar = visitResults.top();
+    visitResults.pop();
+    auto tipInt = new TipInt();
+    TypeConstraint constraint(tipVar, tipInt);
+    constraints.push_back(constraint);
+
+    auto var = new TipVar(element);
+    visitResults.push(var);
 }
 
-void TypeConstraintVisitor::endVisit(AST::BlockStmt  * element) {
-    for (auto  &s : element->getStmts()) {
-        s->accept(this);
-    }
+void TypeConstraintVisitor::endVisit(AST::BlockStmt * element) {
+    // TODO
+    assert(0);
 }
 
-// RECALL, I've canonicalized all of our identifiers (nodes?) I want to use
-// the canonical represenations. Is my canonicalization just to get around my failures
-// to implement the a proper comarrison operators? Or does the canonicalization go deeper???
-TipVar * TypeConstraintVisitor::safeTipVarGenerate(std::string name) {
-    return new TipVar(&canonicals.at(name));
-}
-
-TipVar * TypeConstraintVisitor::safeTipVarGenerate(AST::Node * node) {
-    if(canonicals.count(node->print()) != 0) {
-        return new TipVar(&canonicals.at(node->print()));
-    }
-    return new TipVar(node);
-}

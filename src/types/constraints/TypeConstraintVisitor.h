@@ -5,6 +5,7 @@
 #include "TipVar.h"
 #include "TypeConstraint.h"
 #include <stack>
+#include <vector>
 #include <string>
 
 static const char *const ENTRYPOINT_NAME = "main";
@@ -15,6 +16,7 @@ public:
     TypeConstraintVisitor(SymbolTable table);
 
     virtual void endVisit(AST::Program * element) override;
+    virtual bool visit(AST::Function * element) override;
     virtual void endVisit(AST::Function * element) override;
     virtual void endVisit(AST::NumberExpr * element) override;
     virtual void endVisit(AST::VariableExpr * element) override;
@@ -44,6 +46,7 @@ private:
     SymbolTable symbolTable;
     TipVar * safeTipVarGenerate(AST::Node * node);
     TipVar * safeTipVarGenerate(std::string name);
-    std::stack<std::string> visitResults;
+    std::stack<Term *> visitResults;
+    std::stack<AST::DeclNode *> scope;
 };
 
