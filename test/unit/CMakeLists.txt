@@ -5,7 +5,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(external/catch2)
 
 add_subdirectory(helpers)
-add_subdirectory(solvers)
+add_subdirectory(types)
 
 add_executable(unit_tests)
 target_sources(unit_tests PUBLIC

@@ -11,12 +11,13 @@
  */
 
 class TestTerm: public Term { ;
-    Term * substitute(Term * var, Term * term) override {
+    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override {
         return nullptr;
     };
 
-    std::set<Term * > free_variables() override {
-        std::set<Term *> s; return s;
+    std::set<std::shared_ptr<Term>> free_variables() override {
+        std::set<std::shared_ptr<Term>> s;
+        return s;
     }
 
     std::string toString() override {
@@ -33,7 +34,7 @@ class TestTerm: public Term { ;
 };
 
 class TestCons: public Cons {
-    Term * substitute(Term * var, Term * term) override {
+    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override {
         return nullptr;
     };
 
@@ -77,7 +78,7 @@ class TestVar: public Var {
 };
 
 class TestMu: public Mu {
-    Term * substitute(Term * var, Term * term) override {
+    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override {
         return nullptr;
     };
 
