@@ -44,9 +44,7 @@ public:
 private:
     std::vector<TypeConstraint> constraints;
     SymbolTable symbolTable;
-    TipVar * safeTipVarGenerate(AST::Node * node);
-    TipVar * safeTipVarGenerate(std::string name);
-    std::stack<Term *> visitResults;
+    std::stack<std::shared_ptr<Term>> visitResults;
     std::stack<AST::DeclNode *> scope;
 };
 

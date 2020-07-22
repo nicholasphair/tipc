@@ -2,6 +2,8 @@
 #include "Var.h"
 #include <sstream>
 
+TipAlpha::TipAlpha(std::string x): x(x) {};
+
 std::string TipAlpha::toString() {
     std::stringstream stream;
     stream << "\u03B1";

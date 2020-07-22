@@ -5,12 +5,13 @@
 class TipRef: public TipType, public Cons {
 public:
     TipRef() = delete;
-    TipRef(Term * of): of(of) { arguments.push_back(of); };
+    TipRef(std::shared_ptr<Term> of);
 
-    Term * substitute(Term * var, Term * term) override;
+    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override;
     std::string toString() override ;
 
-    Term * of;
+    //Term * of;
+    std::shared_ptr<Term> of;
     bool operator==(const Term& other) const override;
     bool operator!=(const Term& other) const override;
 };

@@ -3,14 +3,23 @@
 #include "assert.h"
 #include <sstream>
 
-Term *TipFunction::substitute(Term *var, Term *term) {
-    if(Var * sv = dynamic_cast<Var *>(var)) {
-        std::vector<Term *> new_params;
+TipFunction::TipFunction(std::vector<std::shared_ptr<Term>> params, std::shared_ptr<Term> ret): params(params), ret(ret) {
+    for(auto p : params) {
+        arguments.push_back(p);
+    }
+    this->arguments.push_back(ret);
+};
+
+std::shared_ptr<Term> TipFunction::substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) {
+    if(Var * sv = dynamic_cast<Var *>(var.get())) {
+        std::vector<std::shared_ptr<Term>> new_params;
         for (auto p : this->params) {
-            new_params.push_back(p->substitute(var, term));
+            // TODO: Not yet implemented.
+            //new_params.push_back(p->substitute(var, term));
         }
         auto new_ret = ret->substitute(var, term);
-        return new TipFunction(new_params, new_ret);
+        // TODO Note yet implemented..
+        //return new TipFunction(new_params, new_ret);
     }
     assert(0);
 }

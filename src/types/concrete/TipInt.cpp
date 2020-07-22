@@ -5,9 +5,10 @@
 
 TipInt::TipInt() { }
 
-Term * TipInt::substitute(Term *var, Term *term) {
+std::shared_ptr<Term> TipInt::substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) {
     if(Var * v = dynamic_cast<Var *>(v)) {
-        return this;
+        // TODO: Not yet implemented.
+        //return this;
     }
     assert(0);
 }

@@ -1,6 +1,8 @@
 #include "TypeConstraint.h"
 #include "iostream"
 
+TypeConstraint::TypeConstraint(std::shared_ptr<Term> l, std::shared_ptr<Term> r): lhs(l), rhs(r) {};
+
 bool TypeConstraint::operator==(const TypeConstraint &other) const {
     return *lhs == *(other.lhs);
 }

@@ -2,21 +2,17 @@
 #include "assert.h"
 #include <iostream>
 
-TipMu::TipMu() {
-    assert(0);
+TipMu::TipMu(std::shared_ptr<Var> v, std::shared_ptr<Term> t): v(v), t(t) {
+
 }
 
-TipMu::TipMu(Var *v, Term *t) {
-    this->v = v;
-    this->t = t;
-}
-
-Term * TipMu::substitute(Term *var, Term *term) {
-    if(Var * sv = dynamic_cast<Var *>(v)) {
-        if(sv == this->v) {
-            return this;
+std::shared_ptr<Term> TipMu::substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) {
+    // TODO: Not yet implemented..
+    if(Var * sv = dynamic_cast<Var *>(v.get())) {
+        if(sv == this->v.get()) {
+            //return this
         } else {
-            return new TipMu(this->v, this->t->substitute(sv, term));
+            //return new TipMu(this->v, this->t->substitute(sv, term));
         }
     }
     assert(0);

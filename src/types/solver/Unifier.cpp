@@ -5,33 +5,34 @@
 #include <sstream>
 #include <vector>
 
+// TODO: use dynamic pointer cast.
 Unifier::Unifier(std::vector<TypeConstraint> constrs) : constraints(std::move(constrs)) {
-    std::vector<Term *> terms;
+    std::vector<std::shared_ptr<Term>> terms;
     for(TypeConstraint t : constraints) {
         auto l = t.lhs;
         auto r = t.rhs;
         terms.push_back(l);
         terms.push_back(r);
 
-        if(auto f1 = dynamic_cast<Cons *>(l)) {
+        if(auto f1 = dynamic_cast<Cons *>(l.get())) {
             for(auto a : f1->arguments) terms.push_back(a);
         }
-        if(auto f2 = dynamic_cast<Cons *>(r)) {
+        if(auto f2 = dynamic_cast<Cons *>(r.get())) {
             for(auto a : f2->arguments) terms.push_back(a);
         }
     }
 
     // Deduplicate terms.
-    std::vector<Term *> unique;
+    std::vector<std::shared_ptr<Term>> unique;
     for(auto t : terms) {
         bool add = true;
         for(auto u : unique) {
             if(*t == *u) add = false;
         }
-        if(add) unique.push_back(std::move(t));
+        if(add) unique.push_back(t);
     }
 
-    unionFind = new UnionFind(unique)
+    unionFind = std::make_shared<UnionFind<std::shared_ptr<Term>>>(unique);
 }
 
 void Unifier::solve() {
@@ -40,7 +41,7 @@ void Unifier::solve() {
     }
 }
 
-void Unifier::unify(Term *term1, Term *term2) {
+void Unifier::unify(std::shared_ptr<Term> term1, std::shared_ptr<Term> term2) {
     std::cout << "unifying " << term1->toString() << " and " << term2->toString() << std::endl;
     auto rep1 = unionFind->find(term1);
     auto rep2 = unionFind->find(term2);
@@ -56,8 +57,8 @@ void Unifier::unify(Term *term1, Term *term2) {
     } else if(isProperType(rep1) && isTermVar(rep2)) {
         unionFind->quick_union(rep2, rep1);
     } else if(isCons(rep1) && isCons(rep2)) {
-        auto f1 = dynamic_cast<Cons *>(rep1);
-        auto f2 = dynamic_cast<Cons *>(rep2);
+        auto f1 = std::dynamic_pointer_cast<Cons>(rep1);
+        auto f2 = std::dynamic_pointer_cast<Cons>(rep2);
         if(!f1->do_match(f2)) {
             throwUnifyException(f1, f2);
         }
@@ -73,7 +74,11 @@ void Unifier::unify(Term *term1, Term *term2) {
     }
 }
 
-void Unifier::throwUnifyException(Term * term1, Term * term2) {
+Unifier::~Unifier() {
+
+}
+
+void Unifier::throwUnifyException(std::shared_ptr<Term> term1, std::shared_ptr<Term> term2) {
     std::stringstream s;
     s << "Cannot unify " << term1->toString() << "and " << term2->toString() <<
         "(respective roots are: " << unionFind->find(term1)->toString() << " and " <<
@@ -81,14 +86,14 @@ void Unifier::throwUnifyException(Term * term1, Term * term2) {
     throw UnificationError(s.str().c_str());
 }
 
-bool Unifier::isTermVar(Term * term) {
-     return dynamic_cast<Var *>(term) != nullptr;
+bool Unifier::isTermVar(std::shared_ptr<Term> term) {
+     return std::dynamic_pointer_cast<Var>(term) != nullptr;
 }
 
-bool Unifier::isProperType(Term * term) {
-    return dynamic_cast<Var *>(term) == nullptr;
+bool Unifier::isProperType(std::shared_ptr<Term> term) {
+    return std::dynamic_pointer_cast<Var>(term) == nullptr;
 }
 
-bool Unifier::isCons(Term * term) {
-    return dynamic_cast<Cons *>(term) != nullptr;
+bool Unifier::isCons(std::shared_ptr<Term> term) {
+    return std::dynamic_pointer_cast<Cons>(term) != nullptr;
 }

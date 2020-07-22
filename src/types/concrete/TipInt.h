@@ -7,7 +7,7 @@
 class TipInt: public TipType, public Cons {
 public:
     TipInt();
-    Term * substitute(Term * var, Term * term) override;
+    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override;
     std::string toString() override;
 
     bool operator==(const Term& other) const override;

@@ -8,10 +8,10 @@
 class Var: public Term {
 public:
     Var();
-    std::set<Term *> free_variables() override;
-    Term * substitute(Term * var, Term * term) override;
+    std::set<std::shared_ptr<Term>> free_variables() override;
+    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override;
 private:
-    std::set<Term *> fv;
+    std::set<std::shared_ptr<Term>> fv;
 };
 
 

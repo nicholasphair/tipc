@@ -2,19 +2,22 @@
 #include "Var.h"
 
 Var::Var() {
-    fv.insert(this);
+    // TODO: Not yet implmented
+    //fv.insert(this);
 }
 
-std::set<Term *> Var::free_variables() {
+std::set<std::shared_ptr<Term>> Var::free_variables() {
     return fv;
 }
 
-Term * Var::substitute(Term * var, Term * term) {
-    if(Var * v = dynamic_cast<Var *>(v)) {
-        if(var == this) {
+std::shared_ptr<Term> Var::substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) {
+    if(Var * v = dynamic_cast<Var *>(var.get())) {
+        if(v == this) {
             return term;
         } else {
-            return this;
+            // TODO: NOT YET IMPLEMENTED
+            assert(0);
+            //return std::make_shared<Var>(this);
         }
     }
     assert(0);

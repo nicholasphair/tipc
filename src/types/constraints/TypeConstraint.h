@@ -5,10 +5,10 @@
 class TypeConstraint {
 public:
     TypeConstraint() = delete;
-    TypeConstraint(Term * l, Term * r): lhs(l), rhs(r) {};
+    TypeConstraint(std::shared_ptr<Term> l, std::shared_ptr<Term> r);
 
-    Term * lhs;
-    Term * rhs;
+    std::shared_ptr<Term> lhs;
+    std::shared_ptr<Term> rhs;
     bool operator==(const TypeConstraint& other) const;
     bool operator!=(const TypeConstraint& other) const;
     friend std::ostream& operator<<(std::ostream& os, const TypeConstraint& obj);

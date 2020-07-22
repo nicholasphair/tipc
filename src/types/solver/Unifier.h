@@ -19,13 +19,13 @@ public:
     ~Unifier();
 
     void solve();
-    void unify(Term * t1, Term * t2);
+    void unify(std::shared_ptr<Term> t1, std::shared_ptr<Term> t2);
 private:
-    bool isTermVar(Term *);
-    bool isProperType(Term *);
-    bool isCons(Term *);
-    void throwUnifyException(Term * term1, Term * term2);
+    bool isTermVar(std::shared_ptr<Term>);
+    bool isProperType(std::shared_ptr<Term>);
+    bool isCons(std::shared_ptr<Term>);
+    void throwUnifyException(std::shared_ptr<Term> term1, std::shared_ptr<Term> term2);
     std::vector<TypeConstraint> constraints;
-    UnionFind * unionFind;
+    std::shared_ptr<UnionFind<std::shared_ptr<Term>>> unionFind;
 };
 

@@ -9,7 +9,7 @@
 class TipAlpha: public TipType, public Var {
 public:
     TipAlpha() = default;
-    TipAlpha(std::string x): x(std::move(x)) {};
+    TipAlpha(std::string x);
     std::string toString() override;
     virtual bool operator==(const Term& other) const override;
     virtual bool operator!=(const Term& other) const override;

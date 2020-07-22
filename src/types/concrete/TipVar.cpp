@@ -2,6 +2,8 @@
 #include <sstream>
 #include <iostream>
 
+TipVar::TipVar(std::shared_ptr<AST::Node> node): node(node) {};
+
 std::string TipVar::toString() {
     std::stringstream stream;
     // TODO: Overload output
