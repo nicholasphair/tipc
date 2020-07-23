@@ -32,29 +32,3 @@ TEST_CASE("test doMatch with same arity and different class", "[cons]") {
     REQUIRE(!cons->do_match(t1));
 }
 
-TEST_CASE("test free values", "[.][cons]") {
-    // Two free vars from cons.
-    std::shared_ptr<TestCons> cons = std::make_shared<TestCons>();
-    std::shared_ptr<TestVar> fv1 = std::make_shared<TestVar>();
-    std::shared_ptr<TestVar> fv2 = std::make_shared<TestVar>();
-    cons->arguments.push_back(fv1);
-    cons->arguments.push_back(fv2);
-
-    // Two free vars from arg1.
-    std::shared_ptr<TestCons> arg1 = std::make_shared<TestCons>();
-    std::shared_ptr<TestVar> fv3 = std::make_shared<TestVar>();
-    std::shared_ptr<TestVar> fv4 = std::make_shared<TestVar>();
-    arg1->arguments.push_back(fv3);
-    arg1->arguments.push_back(fv4);
-
-    // Two free vars from arg2 but one is a duplicate.
-    std::shared_ptr<TestCons> arg2 = std::make_shared<TestCons>();
-    std::shared_ptr<TestVar> fv5 = std::make_shared<TestVar>();
-    std::shared_ptr<TestVar> fv6 = std::make_shared<TestVar>();
-    arg1->arguments.push_back(fv5);
-    arg1->arguments.push_back(fv6);
-
-    cons->arguments.push_back(arg1);
-    cons->arguments.push_back(arg2);
-    REQUIRE(5 == cons->free_variables().size());
-}

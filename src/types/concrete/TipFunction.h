@@ -10,7 +10,6 @@ public:
     TipFunction() = delete;
     TipFunction(std::vector<std::shared_ptr<Term>> params, std::shared_ptr<Term> ret);
 
-    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override;
     std::string toString() override;
 
     std::vector<std::shared_ptr<Term>> params;

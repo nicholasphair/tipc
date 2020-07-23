@@ -62,6 +62,9 @@ void TypeConstraintVisitor::endVisit(AST::Function * element) {
 
     auto tipFunction = std::make_shared<TipFunction>(args, ret);
 
+    TipFunction tipFunction2(args, ret);
+    visitResults2.push(tipFunction2);
+
     auto fn = visitResults.top();
     visitResults.pop();
     TypeConstraint constraint(fn, tipFunction);

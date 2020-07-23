@@ -45,6 +45,7 @@ private:
     std::vector<TypeConstraint> constraints;
     SymbolTable symbolTable;
     std::stack<std::shared_ptr<Term>> visitResults;
+    std::stack<TipType> visitResults2;
     std::stack<AST::DeclNode *> scope;
 };
 

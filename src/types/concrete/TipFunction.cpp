@@ -10,20 +10,6 @@ TipFunction::TipFunction(std::vector<std::shared_ptr<Term>> params, std::shared_
     this->arguments.push_back(ret);
 };
 
-std::shared_ptr<Term> TipFunction::substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) {
-    if(Var * sv = dynamic_cast<Var *>(var.get())) {
-        std::vector<std::shared_ptr<Term>> new_params;
-        for (auto p : this->params) {
-            // TODO: Not yet implemented.
-            //new_params.push_back(p->substitute(var, term));
-        }
-        auto new_ret = ret->substitute(var, term);
-        // TODO Note yet implemented..
-        //return new TipFunction(new_params, new_ret);
-    }
-    assert(0);
-}
-
 std::string TipFunction::toString() {
     std::stringstream fmt;
     fmt << "(";

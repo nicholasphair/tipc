@@ -11,15 +11,6 @@
  */
 
 class TestTerm: public Term { ;
-    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override {
-        return nullptr;
-    };
-
-    std::set<std::shared_ptr<Term>> free_variables() override {
-        std::set<std::shared_ptr<Term>> s;
-        return s;
-    }
-
     std::string toString() override {
         return "mock term";
     };
@@ -34,10 +25,6 @@ class TestTerm: public Term { ;
 };
 
 class TestCons: public Cons {
-    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override {
-        return nullptr;
-    };
-
     std::string toString() override {
         return "mock cons";
     };
@@ -78,10 +65,6 @@ class TestVar: public Var {
 };
 
 class TestMu: public Mu {
-    std::shared_ptr<Term> substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) override {
-        return nullptr;
-    };
-
     std::string toString() override {
         return "mock mu";
     };

@@ -10,7 +10,6 @@ public:
     std::shared_ptr<Var> v;
     std::shared_ptr<Term> t;
 
-    std::set<std::shared_ptr<Term>> free_variables() override;
     virtual std::string toString() override;
 };
 

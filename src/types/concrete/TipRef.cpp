@@ -7,15 +7,6 @@ TipRef::TipRef(std::shared_ptr<Term> of): of(of) {
     //arguments.push_back(of.get());
 }
 
-std::shared_ptr<Term> TipRef::substitute(std::shared_ptr<Term> var, std::shared_ptr<Term> term) {
-    // TODO: Not yet implemented
-    assert(0);
-    //if(Var * sv = dynamic_cast<Var *>(var)) {
-    //    return new TipRef(this->of->substitute(var, term));
-    //}
-    assert(0);
-}
-
 std::string TipRef::toString() {
     std::stringstream stream;
     stream << "&" << of->toString();
