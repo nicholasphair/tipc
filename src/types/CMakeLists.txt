@@ -2,8 +2,6 @@ add_library(types_lib STATIC)
 target_sources(types_lib PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/abstract/Cons.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/abstract/Cons.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/abstract/Mu.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/abstract/Mu.h
         ${CMAKE_CURRENT_SOURCE_DIR}/abstract/Term.h
         ${CMAKE_CURRENT_SOURCE_DIR}/abstract/Var.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/abstract/Var.h
@@ -13,8 +11,6 @@ target_sources(types_lib PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipFunction.h
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipInt.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipInt.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipMu.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipMu.h
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipRef.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipRef.h
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipType.h
@@ -30,6 +26,11 @@ target_sources(types_lib PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/Unifier.h
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnionFind.h
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnionFind.tpp
+        # TODO: Used for closing terms.
+        #${CMAKE_CURRENT_SOURCE_DIR}/abstract/Mu.cpp
+        #${CMAKE_CURRENT_SOURCE_DIR}/abstract/Mu.h
+        #${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipMu.cpp
+        #${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipMu.h
         )
 target_include_directories(types_lib PUBLIC
         ${CMAKE_SOURCE_DIR}/src
