@@ -1,15 +1,15 @@
 #pragma once
 
 #include "TipType.h"
-#include "Cons.h"
+#include "TipCons.h"
 #include <string>
 
-class TipInt: public TipType, public Cons {
+class TipInt: public TipCons {
 public:
     TipInt();
     std::string toString() override;
 
-    bool operator==(const Term& other) const override;
-    bool operator!=(const Term& other) const override;
+    bool operator==(const TipType& other) const override;
+    bool operator!=(const TipType& other) const override;
 };
 

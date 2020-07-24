@@ -1,18 +1,17 @@
 #pragma once
 
-#include "TipType.h"
-#include "Cons.h"
+#include "TipVar.h"
+#include "TipCons.h"
 #include <string>
 #include <any>
-#include "Var.h"
 
-class TipAlpha: public TipType, public Var {
+class TipAlpha: public TipVar {
 public:
     TipAlpha() = default;
     TipAlpha(std::string x);
     std::string toString() override;
-    virtual bool operator==(const Term& other) const override;
-    virtual bool operator!=(const Term& other) const override;
+    virtual bool operator==(const TipType& other) const override;
+    virtual bool operator!=(const TipType& other) const override;
 
 private:
     std::string x;

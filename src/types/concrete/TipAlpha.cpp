@@ -1,5 +1,5 @@
 #include "TipAlpha.h"
-#include "Var.h"
+#include "TipVar.h"
 #include <sstream>
 
 TipAlpha::TipAlpha(std::string x): x(x) {};
@@ -13,13 +13,13 @@ std::string TipAlpha::toString() {
     return stream.str();
 }
 
-bool TipAlpha::operator==(const Term &other) const {
+bool TipAlpha::operator==(const TipType &other) const {
     if(auto t = dynamic_cast<const TipAlpha *>(&other)) {
         return x == t->x;
     }
     return false;
 }
 
-bool TipAlpha::operator!=(const Term &other) const {
+bool TipAlpha::operator!=(const TipType &other) const {
     return !(*this == other);
 }

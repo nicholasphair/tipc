@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Term.h"
-#include "Var.h"
-#include "Cons.h"
+#include "TipType.h"
+#include "TipVar.h"
+#include "TipCons.h"
 #include <string>
 #include <map>
 #include <vector>
@@ -19,13 +19,13 @@ public:
     ~Unifier();
 
     void solve();
-    void unify(std::shared_ptr<Term> t1, std::shared_ptr<Term> t2);
+    void unify(std::shared_ptr<TipType> t1, std::shared_ptr<TipType> t2);
 private:
-    bool isTermVar(std::shared_ptr<Term>);
-    bool isProperType(std::shared_ptr<Term>);
-    bool isCons(std::shared_ptr<Term>);
-    void throwUnifyException(std::shared_ptr<Term> term1, std::shared_ptr<Term> term2);
+    bool isTipVar(std::shared_ptr<TipType>);
+    bool isProperType(std::shared_ptr<TipType>);
+    bool isCons(std::shared_ptr<TipType>);
+    void throwUnifyException(std::shared_ptr<TipType> TipType1, std::shared_ptr<TipType> TipType2);
     std::vector<TypeConstraint> constraints;
-    std::shared_ptr<UnionFind<std::shared_ptr<Term>>> unionFind;
+    std::shared_ptr<UnionFind<std::shared_ptr<TipType>>> unionFind;
 };
 

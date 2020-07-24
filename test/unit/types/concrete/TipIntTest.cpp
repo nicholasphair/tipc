@@ -2,9 +2,9 @@
 #include "TipInt.h"
 #include "TipVar.h"
 
-TEST_CASE("TipInt: test TipInt is a Cons" "[tip_int]") {
+TEST_CASE("TipInt: test TipInt is a TipCons" "[tip_int]") {
     TipInt t;
-    REQUIRE_FALSE(nullptr == dynamic_cast<Cons *>(&t));
+    REQUIRE_FALSE(nullptr == dynamic_cast<TipCons *>(&t));
 }
 
 TEST_CASE("TipInt: test TipInt is a TipType" "[tip_int]") {

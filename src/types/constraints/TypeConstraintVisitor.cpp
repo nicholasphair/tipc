@@ -5,16 +5,16 @@
 #include "TipAlpha.h"
 #include "TipRef.h"
 #include "TipInt.h"
-// TODO: Active function variable -- that way I can look up nodes
-// TODO: Is there an invariant that at the end of each visit the stack is empty
 
+/**
+ * Any given Term can be shared by multiple constraints. As such, we use a shared_ptr.
+ */
 TypeConstraintVisitor::TypeConstraintVisitor(SymbolTable table): symbolTable(table) {};
 
 std::vector<TypeConstraint> TypeConstraintVisitor::get_constraints() {
     return constraints;
 }
 
-// TODO: Revisit w/ stack logic...
 void TypeConstraintVisitor::endVisit(AST::Program * element) {
     auto main = element->findFunctionByName(ENTRYPOINT_NAME);
     if(main == nullptr) {
@@ -43,71 +43,63 @@ bool TypeConstraintVisitor::visit(AST::Function * element) {
 
 // Function declaration
 void TypeConstraintVisitor::endVisit(AST::Function * element) {
+    auto node = std::make_shared<TipVar>(element);
+
     // function name, formal, declars, stmts
     auto ret = visitResults.top();
-    for(int i = 0; i < element->getStmts().size(); i++) {
+    for(auto _ : element->getStmts()) {
         visitResults.pop();
     }
 
-    for(int i = 0; i < element->getDeclarations().size(); i++) {
+    for(auto _ : element->getDeclarations()) {
         visitResults.pop();
     }
 
-    std::vector<std::shared_ptr<Term>> args;
-    for(int i = 0; i < element->getFormals().size(); i++) {
-        auto formal = visitResults.top();
-        args.push_back(formal);
+    std::vector<std::shared_ptr<TipType>> formals;
+    for(auto _ : element->getFormals()) {
+        formals.push_back(visitResults.top());
         visitResults.pop();
     }
 
-    auto tipFunction = std::make_shared<TipFunction>(args, ret);
-
-    TipFunction tipFunction2(args, ret);
-    visitResults2.push(tipFunction2);
-
-    auto fn = visitResults.top();
+    auto tipFunction = std::make_shared<TipFunction>(formals, ret);
+    TypeConstraint constraint(visitResults.top(), tipFunction);
     visitResults.pop();
-    TypeConstraint constraint(fn, tipFunction);
     constraints.push_back(constraint);
 
-    auto var = std::make_shared<TipVar>(element);
-    visitResults.push(var);
+    visitResults.push(node);
     scope.pop();
 }
 
-// NOTE: DONE.
 void TypeConstraintVisitor::endVisit(AST::NumberExpr * element) {
-    auto tipVar = std::make_shared<TipVar>(element);
-    auto tipInt = std::make_shared<TipInt>();
-    TypeConstraint constraint(tipVar, tipInt);
+    auto node = std::make_shared<TipVar>(element);
+    TypeConstraint constraint(node, std::make_shared<TipInt>());
     constraints.push_back(constraint);
-    visitResults.push(tipVar);
+    visitResults.push(node);
 }
 
 void TypeConstraintVisitor::endVisit(AST::VariableExpr * element) {
-    // TODO: I need to be able to get my canonical form...
-    auto var = symbolTable.getLocal(element->getName(), scope.top());
-    auto tipVar = std::make_shared<TipVar>(var);
-    visitResults.push(tipVar);
+    auto canonical = symbolTable.getLocal(element->getName(), scope.top());
+    visitResults.push(std::make_shared<TipVar>(canonical));
 }
 
 // TODO: i think I need to use a stack.. When its a leaf and a decl push it
 void TypeConstraintVisitor::endVisit(AST::BinaryExpr  * element) {
+    auto node = std::make_shared<TipVar>(element);
+
     // left is visited then right is visited.
-    auto e1 = visitResults.top();
-    visitResults.pop();
     auto e2 = visitResults.top();
     visitResults.pop();
+    auto e1 = visitResults.top();
+    visitResults.pop();
 
-    auto e1_eq_e2 = std::make_shared<TipVar>(element);
     auto tipInt = std::make_shared<TipInt>();
 
     TypeConstraint constraint1(e1, e2);
-    TypeConstraint constraint2(e1, e1_eq_e2);
+    TypeConstraint constraint2(e1, node);
     TypeConstraint constraint3(e1, tipInt);
-    TypeConstraint constraint4(e2, e1_eq_e2);
+    TypeConstraint constraint4(e2, node);
     TypeConstraint constraint5(e2, tipInt);
-    TypeConstraint constraint6(e1_eq_e2, tipInt);
+    TypeConstraint constraint6(node, tipInt);
 
     if(element->getOp() == "==") {
         constraints.push_back(constraint1);
@@ -121,91 +113,98 @@ void TypeConstraintVisitor::endVisit(AST::BinaryExpr  * element) {
         constraints.push_back(constraint6);
     }
 
-    visitResults.push(e1_eq_e2);
+    visitResults.push(node);
 }
 
 void TypeConstraintVisitor::endVisit(AST::InputExpr * element) {
-    auto tipVar = std::make_shared<TipVar>(element);
-    auto tipInt = std::make_shared<TipInt>();
-    TypeConstraint constraint(tipVar, tipInt);
+    auto node = std::make_shared<TipVar>(element);
+    TypeConstraint constraint(node, std::make_shared<TipInt>());
     constraints.push_back(constraint);
-    visitResults.push(tipVar);
+
+    visitResults.push(node);
 }
 
-// TODO
 void TypeConstraintVisitor::endVisit(AST::FunAppExpr  * element) {
-    auto tipVar = std::make_shared<TipVar>(element);
+    auto node = std::make_shared<TipVar>(element);
 
-    std::vector<std::shared_ptr<Term>> actuals;
-    for(int i = 0; i < element->getActuals().size() - 1; i++) {
-        auto actual = visitResults.top();
-        actuals.push_back(actual);
+    std::vector<std::shared_ptr<TipType>> actuals;
+    for(auto _ : element->getActuals()) {
+        actuals.push_back(visitResults.top());
         visitResults.pop();
     }
 
+    auto function = std::make_shared<TipFunction>(actuals, node);
     auto application = visitResults.top();
     visitResults.pop();
-    auto function = std::make_shared<TipFunction>(actuals, application);
-    TypeConstraint constraint(tipVar, function);
+    TypeConstraint constraint(application, function);
     constraints.push_back(constraint);
-    visitResults.push(tipVar);
+    visitResults.push(node);
 }
 
 // DONE.
 void TypeConstraintVisitor::endVisit(AST::AllocExpr * element) {
-    auto tipVar = std::make_shared<TipVar>(element);
-    auto tipVar2 = visitResults.top();
+    auto node = std::make_shared<TipVar>(element);
+
+    auto initializer = visitResults.top();
     visitResults.pop();
-    auto tipRef = std::make_shared<TipRef>(tipVar2);
-    TypeConstraint constraint(tipVar, tipRef);
+    auto tipRef = std::make_shared<TipRef>(initializer);
+    TypeConstraint constraint(node, tipRef);
     constraints.push_back(constraint);
-    visitResults.push(tipVar);
+    visitResults.push(node);
 }
 
 
 void TypeConstraintVisitor::endVisit(AST::RefExpr * element) {
-    auto tipVar = std::make_shared<TipVar>(element);
-    auto tipVar2 = visitResults.top();
+    auto node = std::make_shared<TipVar>(element);
+
+    auto var = visitResults.top();
     visitResults.pop();
-    auto tipRef = std::make_shared<TipRef>(tipVar2);
-    TypeConstraint constraint(tipVar, tipRef);
+    auto tipRef = std::make_shared<TipRef>(var);
+    TypeConstraint constraint(node, tipRef);
     constraints.push_back(constraint);
-    visitResults.push(tipVar2);
+
+    visitResults.push(node);
 }
 
 void TypeConstraintVisitor::endVisit(AST::DeRefExpr * element) {
-    auto tipVar = visitResults.top();
+    auto node = std::make_shared<TipVar>(element);
+    auto tipRef = std::make_shared<TipRef>(node);
+
+    auto dereferenced = visitResults.top();
     visitResults.pop();
-    auto tipVar2 = std::make_shared<TipVar>(element);
-    auto tipRef = std::make_shared<TipRef>(tipVar2);
-    TypeConstraint constraint(tipVar, tipRef);
+
+    TypeConstraint constraint(dereferenced, tipRef);
     constraints.push_back(constraint);
-    visitResults.push(tipVar2);
+
+    visitResults.push(node);
 }
 
 void TypeConstraintVisitor::endVisit(AST::NullExpr * element) {
-    // TODO: nulls need to be cannonicalized somehow.
-    auto tipVar = std::make_shared<TipVar>(element);
+    auto node = std::make_shared<TipVar>(element);
+
     auto tipAlpha = std::make_shared<TipAlpha>("");
     auto tipRef = std::make_shared<TipRef>(tipAlpha);
-    TypeConstraint constraint(tipVar, tipRef);
+
+    TypeConstraint constraint(node, tipRef);
     constraints.push_back(constraint);
-    visitResults.push(tipVar);
+    visitResults.push(node);
 }
 
+// Variable Declarations make no constraints.
 void TypeConstraintVisitor::endVisit(AST::DeclStmt * element) {
-    auto tipVar = std::make_shared<TipVar>(element);
-    visitResults.push(tipVar);
-    // Variable Declarations make no constraints.
+    auto node = std::make_shared<TipVar>(element);
+    visitResults.push(node);
 }
 
+// No need to to a symbol table lookup. These are the canonical forms.
 void TypeConstraintVisitor::endVisit(AST::DeclNode * element) {
-    auto tipVar = std::make_shared<TipVar>(element);
-    visitResults.push(tipVar);
+    auto node = std::make_shared<TipVar>(element);
+    visitResults.push(node);
 }
 
 void TypeConstraintVisitor::endVisit(AST::AssignStmt  * element) {
-    // visit left then visit right
+    auto node = std::make_shared<TipVar>(element);
+
     auto rhs = visitResults.top();
     visitResults.pop();
     auto lhs = visitResults.top();
@@ -214,44 +213,54 @@ void TypeConstraintVisitor::endVisit(AST::AssignStmt  * element) {
     TypeConstraint constraint(lhs, rhs);
     constraints.push_back(constraint);
 
-    // NOTE: I think this is right..
-    auto tipVar = std::make_shared<TipVar>(element);
-    visitResults.push(tipVar);
+    visitResults.push(node);
 }
 
 void TypeConstraintVisitor::endVisit(AST::WhileStmt * element) {
-    // TODO: Confirm that this is the condition.
-    auto tipVar = visitResults.top();
+    auto node = std::make_shared<TipVar>(element);
+
+    // Pop off the body.
     visitResults.pop();
-    auto tipInt = std::make_shared<TipInt>();
-    TypeConstraint constraint(tipVar, tipInt);
+
+    auto condition = visitResults.top();
+    visitResults.pop();
+
+    TypeConstraint constraint(condition, std::make_shared<TipInt>());
     constraints.push_back(constraint);
 
-    auto var = std::make_shared<TipVar>(element);
-    visitResults.push(var);
+    visitResults.push(node);
 }
 
 void TypeConstraintVisitor::endVisit(AST::IfStmt * element) {
-    // TODO: verify this is the condition..
-    auto tipVar = visitResults.top();
+    auto node = std::make_shared<TipVar>(element);
+
+    // Pop off the statements.
+    if (element->getElse() != nullptr) {
+        visitResults.pop();
+    }
     visitResults.pop();
-    auto tipInt = std::make_shared<TipInt>();
-    TypeConstraint constraint(tipVar, tipInt);
+
+    auto condition = visitResults.top();
+    visitResults.pop();
+
+    TypeConstraint constraint(condition, std::make_shared<TipInt>());
     constraints.push_back(constraint);
 
-    auto var = std::make_shared<TipVar>(element);
-    visitResults.push(var);
+    visitResults.push(node);
 }
 
 void TypeConstraintVisitor::endVisit(AST::OutputStmt * element) {
-    auto tipVar = visitResults.top();
+    auto node = std::make_shared<TipVar>(element);
+
+    auto argument = visitResults.top();
     visitResults.pop();
+
     auto tipInt = std::make_shared<TipInt>();
-    TypeConstraint constraint(tipVar, tipInt);
+
+    TypeConstraint constraint(argument, tipInt);
     constraints.push_back(constraint);
 
-    auto var = std::make_shared<TipVar>(element);
-    visitResults.push(var);
+    visitResults.push(node);
 }
 
 void TypeConstraintVisitor::endVisit(AST::ReturnStmt * element) {

@@ -20,7 +20,7 @@ TEST_CASE("TipVar: test TipVars objects with different underlying node are not e
 TEST_CASE("TipVar: test TipVar is a Var" "[TipVar]") {
     AST::NumberExpr n(42);
     TipVar var(&n);
-    REQUIRE_FALSE(nullptr == dynamic_cast<Var *>(&var));
+    REQUIRE_FALSE(nullptr == dynamic_cast<TipVar *>(&var));
 }
 
 TEST_CASE("TipVar: test TipVar is a TipType" "[TipVar]") {

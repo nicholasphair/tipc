@@ -1,17 +1,17 @@
 #pragma once
 #include "TipType.h"
-#include "Cons.h"
+#include "TipCons.h"
 
-class TipRef: public TipType, public Cons {
+class TipRef: public TipCons {
 public:
     TipRef() = delete;
-    TipRef(std::shared_ptr<Term> of);
+    TipRef(std::shared_ptr<TipType> of);
 
     std::string toString() override ;
 
-    std::shared_ptr<Term> of;
-    bool operator==(const Term& other) const override;
-    bool operator!=(const Term& other) const override;
+    std::shared_ptr<TipType> of;
+    bool operator==(const TipType& other) const override;
+    bool operator!=(const TipType& other) const override;
 };
 
 
