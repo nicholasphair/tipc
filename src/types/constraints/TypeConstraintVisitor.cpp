@@ -17,28 +17,29 @@ std::vector<TypeConstraint> TypeConstraintVisitor::get_constraints() {
 
 void TypeConstraintVisitor::endVisit(AST::Program * element) {
     auto main = element->findFunctionByName(ENTRYPOINT_NAME);
-    if(main == nullptr) {
-        assert(false);
-    }
+    //if(main == nullptr) {
+    //    assert(false);
+    //}
 
-    for(auto formal : main->getFormals()) {
-        auto name = symbolTable.getLocal(formal->getName(), main->getDecl());
-        auto var = std::make_shared<TipVar>(name);
-        auto tipInt = std::make_shared<TipInt>();
-        TypeConstraint typeConstraint(var, tipInt);
-        constraints.push_back(typeConstraint);
-    }
+    //for(auto formal : main->getFormals()) {
+    //    auto name = symbolTable.getLocal(formal->getName(), main->getDecl());
+    //    auto var = std::make_shared<TipVar>(name);
+    //    auto tipInt = std::make_shared<TipInt>();
+    //    TypeConstraint typeConstraint(var, tipInt);
+    //    constraints.push_back(typeConstraint);
+    //}
 
-    auto returnStatement = main->getStmts().back();
-    auto var = std::make_shared<TipVar>(returnStatement);
-    auto tipInt = std::make_shared<TipInt>();
-    TypeConstraint constraint(var, tipInt);
-    constraints.push_back(constraint);
+    //auto returnStatement = main->getStmts().back();
+    //auto var = std::make_shared<TipVar>(returnStatement);
+    //auto tipInt = std::make_shared<TipInt>();
+    //TypeConstraint constraint(var, tipInt);
+    //constraints.push_back(constraint);
 }
 
 
 bool TypeConstraintVisitor::visit(AST::Function * element) {
     scope.push(element->getDecl());
+    return true;
 }
 
 // Function declaration

@@ -2,6 +2,7 @@ GET_PROPERTY(GrammarIncDir GLOBAL PROPERTY GrammarIncludeDir)
 
 include_directories(${GrammarIncDir})
 include_directories(${PROJECT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/helpers)
 include_directories(external/catch2)
 
 add_subdirectory(helpers)
