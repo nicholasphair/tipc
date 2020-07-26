@@ -44,6 +44,10 @@ public:
 private:
     std::vector<TypeConstraint> constraints;
     SymbolTable symbolTable;
+
+    // NB: Each node pushes itself onto the visitResults stack. This allows
+    // the canonical representations of identifiers to propagate up to
+    // where they are used.
     std::stack<std::shared_ptr<TipType>> visitResults;
     std::stack<AST::DeclNode *> scope;
 };

@@ -6,7 +6,7 @@
 #include <types/concrete/TipType.h>
 
 /**
- * Returns humand-readable represesentations of nodes and types.
+ * Returns human-readable string representations of nodes and types.
  */
 class FriendlyNodeStringifier {
 public:

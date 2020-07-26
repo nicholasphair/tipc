@@ -1,5 +1,4 @@
 #include "TypeConstraintVisitor.h"
-#include <iostream>
 #include "TipVar.h"
 #include "TipFunction.h"
 #include "TipAlpha.h"
@@ -43,12 +42,9 @@ bool TypeConstraintVisitor::visit(AST::Function * element) {
     return true;
 }
 
-// Function declaration
 void TypeConstraintVisitor::endVisit(AST::Function * element) {
-    //std::shared_ptr<TipInt> node = std::make_shared<TipVar>(element);
     auto node = std::make_shared<TipVar>(element);
 
-    // function name, formal, declars, stmts
     auto ret = visitResults.top();
     for(auto &_ : element->getStmts()) {
         visitResults.pop();
@@ -85,11 +81,9 @@ void TypeConstraintVisitor::endVisit(AST::VariableExpr * element) {
     visitResults.push(std::make_shared<TipVar>(canonical));
 }
 
-// TODO: i think I need to use a stack.. When its a leaf and a decl push it
 void TypeConstraintVisitor::endVisit(AST::BinaryExpr  * element) {
     auto node = std::make_shared<TipVar>(element);
 
-    // left is visited then right is visited.
     auto e2 = visitResults.top();
     visitResults.pop();
     auto e1 = visitResults.top();
@@ -144,7 +138,6 @@ void TypeConstraintVisitor::endVisit(AST::FunAppExpr  * element) {
     visitResults.push(node);
 }
 
-// DONE.
 void TypeConstraintVisitor::endVisit(AST::AllocExpr * element) {
     auto node = std::make_shared<TipVar>(element);
 
@@ -213,12 +206,23 @@ void TypeConstraintVisitor::endVisit(AST::AssignStmt  * element) {
 
     auto rhs = visitResults.top();
     visitResults.pop();
-    auto lhs = visitResults.top();
-    visitResults.pop();
+    auto _lhs = visitResults.top();
+    if(auto tipVar = std::dynamic_pointer_cast<TipVar>(_lhs)) {
+        if(auto deref = dynamic_cast<AST::DeRefExpr *>(tipVar->node)) {
+            auto lhs = std::make_shared<TipVar>(deref->getPtr());
+            auto r = std::make_shared<TipRef>(rhs);
+            TypeConstraint constraint(lhs, r);
+            constraints.push_back(constraint);
+            visitResults.pop();
+            visitResults.push(node);
+            return;
+        }
+    }
 
-    TypeConstraint constraint(lhs, rhs);
+    TypeConstraint constraint(_lhs, rhs);
     constraints.push_back(constraint);
 
+    visitResults.pop();
     visitResults.push(node);
 }
 
