@@ -7,9 +7,9 @@
 class TipInt: public TipCons {
 public:
     TipInt();
-    std::string toString() override;
 
     bool operator==(const TipType& other) const override;
     bool operator!=(const TipType& other) const override;
+    std::ostream& print(std::ostream &out) const override;
 };
 

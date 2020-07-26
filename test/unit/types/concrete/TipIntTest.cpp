@@ -1,6 +1,8 @@
 #include "catch.hpp"
 #include "TipInt.h"
 #include "TipVar.h"
+#include <sstream>
+#include <string>
 
 TEST_CASE("TipInt: test TipInt is a TipCons" "[tip_int]") {
     TipInt t;
@@ -19,7 +21,9 @@ TEST_CASE("TipInt: test args is empty", "[tip_int]") {
 
 TEST_CASE("TipInt: test toString returns int", "[tip_int]") {
     TipInt t;
-    REQUIRE("int" == t.toString());
+    std::stringstream stream;
+    stream << t;
+    REQUIRE("int" == stream.str());
 }
 
 TEST_CASE("TipInt: test all TipInts are equal", "[tip_int]") {

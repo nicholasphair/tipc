@@ -5,6 +5,7 @@
 #include "TipAlpha.h"
 #include "TipRef.h"
 #include "TipInt.h"
+#include <memory>
 
 /**
  * Any given Term can be shared by multiple constraints. As such, we use a shared_ptr.
@@ -44,20 +45,21 @@ bool TypeConstraintVisitor::visit(AST::Function * element) {
 
 // Function declaration
 void TypeConstraintVisitor::endVisit(AST::Function * element) {
+    //std::shared_ptr<TipInt> node = std::make_shared<TipVar>(element);
     auto node = std::make_shared<TipVar>(element);
 
     // function name, formal, declars, stmts
     auto ret = visitResults.top();
-    for(auto _ : element->getStmts()) {
+    for(auto &_ : element->getStmts()) {
         visitResults.pop();
     }
 
-    for(auto _ : element->getDeclarations()) {
+    for(auto &_ : element->getDeclarations()) {
         visitResults.pop();
     }
 
     std::vector<std::shared_ptr<TipType>> formals;
-    for(auto _ : element->getFormals()) {
+    for(auto &_ : element->getFormals()) {
         formals.push_back(visitResults.top());
         visitResults.pop();
     }
@@ -194,6 +196,9 @@ void TypeConstraintVisitor::endVisit(AST::NullExpr * element) {
 // Variable Declarations make no constraints.
 void TypeConstraintVisitor::endVisit(AST::DeclStmt * element) {
     auto node = std::make_shared<TipVar>(element);
+    for(auto &_ : element->getVars()) {
+        visitResults.pop();
+    }
     visitResults.push(node);
 }
 
@@ -266,6 +271,7 @@ void TypeConstraintVisitor::endVisit(AST::OutputStmt * element) {
 
 void TypeConstraintVisitor::endVisit(AST::ReturnStmt * element) {
     auto var = std::make_shared<TipVar>(element);
+    visitResults.pop();  // Pop the arg.
     visitResults.push(var);
 }
 

@@ -6,12 +6,6 @@ TipRef::TipRef(std::shared_ptr<TipType> of): of(of) {
     //arguments.push_back(of.get());
 }
 
-std::string TipRef::toString() {
-    std::stringstream stream;
-    stream << "&" << of->toString();
-    return stream.str();
-}
-
 bool TipRef::operator==(const TipType &other) const {
     if(auto t = dynamic_cast<const TipRef *>(&other)) {
         return *of == *(t->of);
@@ -22,3 +16,9 @@ bool TipRef::operator==(const TipType &other) const {
 bool TipRef::operator!=(const TipType &other) const {
     return !(*this == other);
 }
+
+std::ostream& TipRef::print(std::ostream &out) const {
+    out << "&" << *of;
+    return out;
+}
+

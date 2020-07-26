@@ -42,7 +42,7 @@ void Unifier::solve() {
 }
 
 void Unifier::unify(std::shared_ptr<TipType> TipType1, std::shared_ptr<TipType> TipType2) {
-    std::cout << "unifying " << TipType1->toString() << " and " << TipType2->toString() << std::endl;
+    //std::cout << "unifying " << TipType1->toString() << " and " << TipType2->toString() << std::endl;
     auto rep1 = unionFind->find(TipType1);
     auto rep2 = unionFind->find(TipType2);
 
@@ -80,9 +80,9 @@ Unifier::~Unifier() {
 
 void Unifier::throwUnifyException(std::shared_ptr<TipType> TipType1, std::shared_ptr<TipType> TipType2) {
     std::stringstream s;
-    s << "Cannot unify " << TipType1->toString() << "and " << TipType2->toString() <<
-        "(respective roots are: " << unionFind->find(TipType1)->toString() << " and " <<
-        unionFind->find(TipType2)->toString() << ")";
+    s << "Cannot unify " << TipType1 << "and " << TipType2 <<
+        "(respective roots are: " << unionFind->find(TipType1) << " and " <<
+        unionFind->find(TipType2) << ")";
     throw UnificationError(s.str().c_str());
 }
 

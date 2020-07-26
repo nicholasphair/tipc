@@ -1,16 +1,11 @@
 #include "TipAlpha.h"
-#include "TipVar.h"
 #include <sstream>
 
 TipAlpha::TipAlpha(std::string x): x(x) {};
 
-std::string TipAlpha::toString() {
-    std::stringstream stream;
-    stream << "\u03B1";
-    //if(x.has_value()) {
-    //    stream << "<" << x.>";
-    //}
-    return stream.str();
+std::ostream &TipAlpha::print(std::ostream &out) const {
+    out << "\u03B1";
+    return out;
 }
 
 bool TipAlpha::operator==(const TipType &other) const {

@@ -1,10 +1,7 @@
 #include "TipInt.h"
+#include <string>
 
 TipInt::TipInt() { }
-
-std::string TipInt::toString() {
-    return "int";
-}
 
 bool TipInt::operator==(const TipType &other) const {
     if(auto t = dynamic_cast<TipInt const *>(&other)) {
@@ -15,4 +12,9 @@ bool TipInt::operator==(const TipType &other) const {
 
 bool TipInt::operator!=(const TipType &other) const {
     return !(*this == other);
+}
+
+std::ostream &TipInt::print(std::ostream &out) const {
+    out << std::string("int");
+    return out;
 }

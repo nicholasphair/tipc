@@ -12,6 +12,7 @@ public:
     TipMu() = delete;
     TipMu(std::shared_ptr<Var> v, std::shared_ptr<Term> t);
     std::string toString() override ;
+    std::ostream& print(std::ostream &out) const override;
     bool operator==(const Term& other) const override;
     bool operator!=(const Term& other) const override;
 

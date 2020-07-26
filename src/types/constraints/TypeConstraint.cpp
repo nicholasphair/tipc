@@ -12,5 +12,5 @@ bool TypeConstraint::operator!=(const TypeConstraint &other) const {
 }
 
 std::ostream &operator<<(std::ostream &os, const TypeConstraint &obj) {
-    return os << obj.lhs->toString() + " = " + obj.rhs->toString();
+    return os << *obj.lhs << " = " << *obj.rhs;
 }

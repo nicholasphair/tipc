@@ -9,15 +9,14 @@ int TipFunction::arity() {
     return arguments.size() + 1;
 }
 
-std::string TipFunction::toString() {
-    std::stringstream fmt;
-    fmt << "(";
+std::ostream &TipFunction::print(std::ostream &out) const {
+    out << "(";
     int i = 0;
     for(auto&& param : params) {
-        fmt << param->toString() << (++i == params.size() ? "" : ",");
+        out << *param << (++i == params.size() ? "" : ",");
     }
-    fmt << ") -> " << ret->toString();
-    return fmt.str();
+    out << ") -> " << *ret;
+    return out;
 }
 
 bool TipFunction::operator==(const TipType &other) const {
@@ -40,3 +39,4 @@ bool TipFunction::operator==(const TipType &other) const {
 bool TipFunction::operator!=(const TipType &other) const {
     return !(*this == other);
 }
+

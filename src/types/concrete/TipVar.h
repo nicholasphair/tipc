@@ -9,9 +9,9 @@ public:
     TipVar() = default;
     TipVar(AST::Node * node);
 
-    std::string toString() override;
     AST::Node * node;
     bool operator==(const TipType& other) const override;
     bool operator!=(const TipType& other) const override;
+    std::ostream& print(std::ostream &out) const override;
 };
 

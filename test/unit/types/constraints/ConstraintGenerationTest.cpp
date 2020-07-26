@@ -3,6 +3,12 @@
 #include "TypeConstraintVisitor.h"
 #include "catch.hpp"
 #include <iostream>
+#include <PrettyPrinter.h>
+#include <types/concrete/TipInt.h>
+#include <types/concrete/TipRef.h>
+#include <types/concrete/TipAlpha.h>
+#include <types/concrete/TipFunction.h>
+#include "FriendlyNodeStringifier.h"
 
 TEST_CASE("test constraint generation", "[TIPtreeTypeConstraintVisitor]") {
     std::stringstream stream;
@@ -21,12 +27,15 @@ TEST_CASE("test constraint generation", "[TIPtreeTypeConstraintVisitor]") {
 
     std::stringstream outputStream;
     auto symbols = SymbolTable::build(ast.get(), outputStream);
+
+
     TypeConstraintVisitor typeConstraintVisitor(*symbols.value().get());
     ast->accept(&typeConstraintVisitor);
 
     auto tcs = typeConstraintVisitor.get_constraints();
     for(auto tc : tcs) {
-        std::cout << tc << std::endl;
+        std::cout << FriendlyNodeStringifier::stringify(tc.lhs.get()) << " = " << FriendlyNodeStringifier::stringify(
+                tc.rhs.get()) << std::endl;
     }
 
     REQUIRE(*(tcs.at(0).rhs) == *(tcs.at(1).lhs));

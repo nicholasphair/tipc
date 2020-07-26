@@ -4,13 +4,6 @@
 
 TipVar::TipVar(AST::Node * node): node(node) {};
 
-std::string TipVar::toString() {
-    std::stringstream stream;
-    // TODO: Overload output
-    //stream << "[[" << node->print() << "]]";
-    return stream.str();
-}
-
 bool TipVar::operator==(const TipType &other) const {
     if(auto t = dynamic_cast<TipVar const *>(&other)) {
         return node == t->node;
@@ -20,4 +13,9 @@ bool TipVar::operator==(const TipType &other) const {
 
 bool TipVar::operator!=(const TipType &other) const {
     return !(*this == other);
+}
+
+std::ostream &TipVar::print(std::ostream &out) const {
+    out << "[[" << node << "]]";
+    return out;
 }

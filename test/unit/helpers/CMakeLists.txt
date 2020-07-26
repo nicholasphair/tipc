@@ -1,4 +1,4 @@
-add_library(test_helpers)
+add_library(test_helpers FriendlyNodeStringifier.cpp FriendlyNodeStringifier.h)
 target_sources(test_helpers
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/ParserHelper.cpp
