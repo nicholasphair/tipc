@@ -8266,8 +8266,8 @@ namespace Catch {
 
     // This is the overload that takes a string and infers the Equals matcher from it
     // The more general overload, that takes any string matcher, is in catch_capture_matchers.cpp
-    void handleExceptionMatchExpr( AssertionHandler& handler, std::string const& str, StringRef const& matcherString  ) {
-        handleExceptionMatchExpr( handler, Matchers::Equals( str ), matcherString );
+    void handleExceptionMatchExpr( AssertionHandler& constraintHandler, std::string const& str, StringRef const& matcherString  ) {
+        handleExceptionMatchExpr( constraintHandler, Matchers::Equals( str ), matcherString );
     }
 
 } // namespace Catch
@@ -8378,10 +8378,10 @@ namespace Catch {
     // This is the general overload that takes a any string matcher
     // There is another overload, in catch_assertionhandler.h/.cpp, that only takes a string and infers
     // the Equals matcher (so the header does not mention matchers)
-    void handleExceptionMatchExpr( AssertionHandler& handler, StringMatcher const& matcher, StringRef const& matcherString  ) {
+    void handleExceptionMatchExpr( AssertionHandler& constraintHandler, StringMatcher const& matcher, StringRef const& matcherString  ) {
         std::string exceptionMessage = Catch::translateActiveException();
         MatchExpr<std::string, StringMatcher const&> expr( exceptionMessage, matcher, matcherString );
-        handler.handleExpr( expr );
+        constraintHandler.handleExpr( expr );
     }
 
 } // namespace Catch
@@ -10752,7 +10752,7 @@ namespace Catch {
         // but the value was found experimentally, so there is no strong guarantee
         guaranteeSize = 32 * 1024;
         exceptionHandlerHandle = nullptr;
-        // Register as first handler in current chain
+        // Register as first constraintHandler in current chain
         exceptionHandlerHandle = AddVectoredExceptionHandler(1, handleVectoredException);
         // Pass in guarantee size to be filled
         SetThreadStackGuarantee(&guaranteeSize);

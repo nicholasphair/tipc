@@ -14,17 +14,22 @@
 
 class Unifier {
 public:
-    Unifier() = delete;
-    Unifier(std::vector<TypeConstraint>);
-    ~Unifier();
+    Unifier();
+    explicit Unifier(std::vector<TypeConstraint>);
+    ~Unifier() = default;
+    Unifier(const Unifier& other) = delete;
+    Unifier(Unifier&& other) noexcept = default;
+    Unifier& operator=(const Unifier& other) = delete;
+    Unifier& operator=(Unifier&& other) noexcept = default;
 
     void solve();
-    void unify(TipType * t1, TipType * t2);
+    void unify(TipType const * t1, TipType const * t2);
 private:
-    static bool isTypeVariable(TipType *TipType);
-    static bool isProperType(TipType *);
-    static bool isCons(TipType *);
-    void throwUnifyException(TipType * TipType1, TipType * TipType2);
+    std::vector<TipType *> deduplicate(std::vector<TipType *> types);
+    static bool isTypeVariable(TipType const * TipType);
+    static bool isProperType(TipType const *);
+    static bool isCons(TipType const *);
+    void throwUnifyException(TipType const * TipType1, TipType const * TipType2);
     std::vector<TypeConstraint> constraints;
     std::unique_ptr<UnionFind<TipType>> unionFind;
 };

@@ -4,8 +4,8 @@ int TipCons::arity() const {
     return arguments.size();
 }
 
-bool TipCons::doMatch(TipType * t) const {
-    if(TipCons * c = dynamic_cast<TipCons *>(t)) {
+bool TipCons::doMatch(TipType const * t) const {
+    if(TipCons const * c = dynamic_cast<TipCons const *>(t)) {
         return c->arity() == arity();
     }
     return false;

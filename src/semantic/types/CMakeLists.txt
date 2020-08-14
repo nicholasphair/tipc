@@ -15,15 +15,28 @@ target_sources(types PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipType.h
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipVar.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipVar.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/ConstraintCollector.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/ConstraintCollector.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/ConstraintHandler.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/ConstraintUnifier.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/ConstraintUnifier.h
         ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraint.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraint.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraintCollectVisitor.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraintCollectVisitor.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraintUnifyVisitor.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraintUnifyVisitor.h
         ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraintVisitor.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/constraints/TypeConstraintVisitor.h
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnificationError.h
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/Unifier.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/Unifier.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/Unifier2.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/Unifier2.h
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnionFind.h
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnionFind.tpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnionFind2.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver/UnionFind2.cpp
         # TODO: Used for closing terms.
         #${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipMu.cpp
         #${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipMu.h
@@ -36,5 +49,6 @@ target_include_directories(types PUBLIC
         ${CMAKE_SOURCE_DIR}/src/semantic/symboltable
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete
         ${CMAKE_CURRENT_SOURCE_DIR}/constraints
+        ${CMAKE_CURRENT_SOURCE_DIR}/solver
         )
 target_link_libraries(types coverage_config)

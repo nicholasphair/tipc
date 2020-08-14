@@ -1,13 +1,14 @@
 #pragma once
 
 #include "ASTVisitor.h"
+#include "ConstraintHandler.h"
 #include "SymbolTable.h"
 #include "TipType.h"
-#include <stack>
-#include <vector>
-#include <string>
-#include <set>
 #include <memory>
+#include <set>
+#include <stack>
+#include <string>
+#include <vector>
 
 /*! \class TypeConstraintVisitor
  *  \brief Visitor generates type constraints and processes them.
@@ -21,9 +22,7 @@
 class TypeConstraintVisitor: public ASTVisitor {
 public:
     TypeConstraintVisitor() = delete;
-    TypeConstraintVisitor(SymbolTable* t, void (*p)(std::shared_ptr<TipType>, 
-                                                    std::shared_ptr<TipType>)) : 
-            symbolTable(t), process(p) {};
+    TypeConstraintVisitor(SymbolTable* t, std::unique_ptr<ConstraintHandler> handler);
 
     bool visit(ASTFunction * element) override;
     void endVisit(ASTAccessExpr * element) override;
@@ -43,8 +42,10 @@ public:
     void endVisit(ASTRefExpr * element) override;
     void endVisit(ASTWhileStmt * element) override;
 
+protected:
+    std::unique_ptr<ConstraintHandler> constraintHandler;
+
 private:
-    void (*process)(std::shared_ptr<TipType>, std::shared_ptr<TipType>);
     std::stack<ASTDeclNode *> scope;
     SymbolTable *symbolTable;
     std::shared_ptr<TipType> astToVar(ASTNode * n);
