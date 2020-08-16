@@ -18,16 +18,10 @@ jobs:
     - stage: test
       os: linux
       dist: bionic
-    - stage: test
-      os: osx
-      osx_image: xcode11
-    - stage: deploy
-      os: linux
-      dist: bionic
       install:
         - pip3 install setuptools
         - pip3 install coverxygen
-      script:
+      after_script:
         - lcov --capture --directory build -output-file coverage.info
         - lcov --remove coverage.info '/usr/include/*' -o coverage.info
         - lcov --remove coverage.info '/usr/lib/*' -o coverage.info
@@ -36,9 +30,15 @@ jobs:
         - lcov --list coverage.info
         - bash <(curl -s https://codecov.io/bash) -f coverage.info -F codecoverage || echo "Codecov did not collect coverage reports"
         - echo generating doccoverage
+        - ls -l
         - doxygen
+        - ls -l
         - python3 -m coverxygen --xml-dir xml/ --src-dir . --output doc-coverage.info --kind class
+        - ls -l
         - bash <(curl -s https://codecov.io/bash) -f doc-coverage.info -F doccoverage
+    - stage: test
+      os: osx
+      osx_image: xcode11
 
 install:
   - bash bootstrap
