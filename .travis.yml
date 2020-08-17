@@ -19,6 +19,7 @@ jobs:
       os: linux
       dist: bionic
       install:
+        - bash bootstrap
         - pip3 install setuptools
         - pip3 install coverxygen
       after_script:
