@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "TipInt.h"
 #include "TipVar.h"
 #include <vector>

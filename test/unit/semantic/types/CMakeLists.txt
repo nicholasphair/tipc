@@ -23,4 +23,7 @@ target_include_directories(typeinference_unit_tests
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete
         ${CMAKE_CURRENT_SOURCE_DIR}/../helpers
 )
-target_link_libraries(typeinference_unit_tests antlr4_static ${llvm_libs} frontend semantic codegen optimizer error test_helpers)
+target_link_libraries(typeinference_unit_tests 
+  PUBLIC antlr4_static ${llvm_libs} frontend semantic codegen optimizer error test_helpers
+  PRIVATE Catch2::Catch2 
+)

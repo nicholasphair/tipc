@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "TipCons.h"
 #include "TipRecord.h"
 #include "TipRef.h"

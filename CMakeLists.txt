@@ -93,6 +93,15 @@ include_directories(${CMAKE_SOURCE_DIR}/externals/loguru)
 ######## build target including unit tests ###########
 add_subdirectory(src)
 
+Include(FetchContent)
+
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v2.12.1)
+
+FetchContent_MakeAvailable(Catch2)
+
 option (BUILD_TESTING "Build the testing tree." ON)
 # Only build tests if we are the top-level project
 # Allows this to be used by super projects with `add_subdirectory`

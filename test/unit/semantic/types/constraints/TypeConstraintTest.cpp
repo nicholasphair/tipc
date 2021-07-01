@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "TypeConstraint.h"
 #include "TipFunction.h"
 #include "TipInt.h"
