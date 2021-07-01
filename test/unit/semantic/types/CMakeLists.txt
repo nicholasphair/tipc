@@ -1,6 +1,6 @@
 add_executable(typeinference_unit_tests)
 target_sources(typeinference_unit_tests
-        PUBLIC
+  PRIVATE
         # First test defines CATCH_CONFIG_MAIN
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipAlphaTest.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipConsTest.cpp
@@ -16,11 +16,17 @@ target_sources(typeinference_unit_tests
         ${CMAKE_CURRENT_SOURCE_DIR}/solvers/UnionFindTest.cpp
 )
 target_include_directories(typeinference_unit_tests
-        PUBLIC
+  PRIVATE
+        ${CMAKE_SOURCE_DIR}/src/error
+        ${CMAKE_SOURCE_DIR}/src/frontend/ast
+        ${CMAKE_SOURCE_DIR}/src/frontend/ast/treetypes
+        ${CMAKE_SOURCE_DIR}/src/semantic/symboltable
         ${CMAKE_SOURCE_DIR}/src/semantic/types/concrete
         ${CMAKE_SOURCE_DIR}/src/semantic/types/constraints
         ${CMAKE_SOURCE_DIR}/src/semantic/types/solver
+        ${CMAKE_SOURCE_DIR}/test/unit/helpers/
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete
-        ${CMAKE_CURRENT_SOURCE_DIR}/../helpers
 )
-target_link_libraries(typeinference_unit_tests antlr4_static ${llvm_libs} frontend semantic codegen optimizer error test_helpers)
+target_link_libraries(typeinference_unit_tests 
+  PRIVATE antlr4_static ${llvm_libs} ast types symboltable frontend semantic codegen optimizer error test_helpers coverage_config Catch2::Catch2
+)
