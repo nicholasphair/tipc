@@ -36,7 +36,7 @@ bootstrap_ubuntu_dependencies() {
 
   wget https://apt.llvm.org/llvm.sh
   chmod +x llvm.sh
-  sudo ./llvm.sh $LLVM_DIR
+  sudo ./llvm.sh $LLVM_VERSION
 
   sudo apt -y install \
     libllvm-$LLVM_VERSION-ocaml-dev \
