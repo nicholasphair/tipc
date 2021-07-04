@@ -33,6 +33,8 @@ bootstrap_ubuntu_dependencies() {
   sudo apt -y install \
     cmake 
 
+  whereis cmake
+  which cmake
   cmake --version
 
   sudo apt -y install \
@@ -45,6 +47,8 @@ bootstrap_ubuntu_dependencies() {
     lcov
   
 
+  whereis cmake
+  which cmake
   cmake --version
 
   wget https://apt.llvm.org/llvm.sh
@@ -60,6 +64,8 @@ bootstrap_ubuntu_dependencies() {
     llvm-$LLVM_VERSION-examples \
     llvm-$LLVM_VERSION-runtime
 
+  whereis cmake
+  which cmake
   cmake --version
 
   sudo apt -y install \
