@@ -53,6 +53,8 @@ bootstrap_ubuntu_dependencies() {
     llvm-$LLVM_VERSION-examples \
     llvm-$LLVM_VERSION-runtime
 
+  cmake --version
+
   sudo apt -y install \
     clang-$LLVM_VERSION \
     clang-tools-$LLVM_VERSION \
