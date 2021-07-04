@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -eux
+
 declare -r ANTLR_VERSION=4
 declare -r JAVA_VERSION=8
 declare -r LLVM_VERSION=11
@@ -23,6 +25,10 @@ bootstrap_ubuntu_dependencies() {
   wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add -
   sudo add-apt-repository 'deb https://apt.corretto.aws stable main'
   sudo apt -y update
+
+  wget https://apt.kitware.com/kitware-archive.sh
+  chmod +x kitware-archive.sh
+  sudo ./kitware-archive.sh
 
   sudo apt -y install \
     java-1.$JAVA_VERSION.0-amazon-corretto-jdk \
