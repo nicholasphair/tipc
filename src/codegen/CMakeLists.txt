@@ -1,10 +1,10 @@
 add_library(codegen)
-target_sources(codegen PUBLIC 
+target_sources(codegen PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/CodeGenerator.h
         ${CMAKE_CURRENT_SOURCE_DIR}/CodeGenerator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/CodeGenFunctions.cpp
         )
-target_include_directories(codegen PUBLIC
+target_include_directories(codegen PRIVATE
         ${CMAKE_SOURCE_DIR}/src/error
         ${CMAKE_SOURCE_DIR}/src/frontend/ast
         ${CMAKE_SOURCE_DIR}/src/frontend/ast/treetypes
@@ -17,4 +17,4 @@ target_include_directories(codegen PUBLIC
         ${CMAKE_SOURCE_DIR}/src/semantic/weeding
         )
 llvm_map_components_to_libnames(llvm_libs Support Core Passes)
-target_link_libraries(codegen ${llvm_libs} coverage_config loguru)
+target_link_libraries(codegen PRIVATE ${llvm_libs} coverage_config loguru)

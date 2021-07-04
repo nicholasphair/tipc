@@ -1,6 +1,6 @@
 add_library(symboltable)
 target_sources(symboltable
-        PUBLIC
+        PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/SymbolTable.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/SymbolTable.h
         ${CMAKE_CURRENT_SOURCE_DIR}/FunctionNameCollector.cpp
@@ -11,9 +11,9 @@ target_sources(symboltable
         ${CMAKE_CURRENT_SOURCE_DIR}/FieldNameCollector.h
         )
 target_include_directories(symboltable
-        PUBLIC
+        PRIVATE
         ${CMAKE_SOURCE_DIR}/src/frontend/ast
         ${CMAKE_SOURCE_DIR}/src/frontend/ast/treetypes
         ${CMAKE_SOURCE_DIR}/src/error
         )
-target_link_libraries(symboltable coverage_config)
+target_link_libraries(symboltable PRIVATE coverage_config)

@@ -1,5 +1,5 @@
-add_library(ast STATIC)
-target_sources(ast PUBLIC
+add_library(ast)
+target_sources(ast PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/treetypes/AST.h
 		${CMAKE_CURRENT_SOURCE_DIR}/treetypes/ASTAccessExpr.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/treetypes/ASTAccessExpr.h
@@ -55,10 +55,11 @@ target_sources(ast PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}/ASTBuilder.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/ASTBuilder.h
 		)
-target_include_directories(ast PUBLIC
-		${CMAKE_CURRENT_SOURCE_DIR}/
+target_include_directories(ast
+		PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}
 		${CMAKE_CURRENT_SOURCE_DIR}/treetypes
 		${CMAKE_SOURCE_DIR}/src/frontend/prettyprint
 		${ANTLR_TIPGrammar_OUTPUT_DIR}
 		)
-target_link_libraries(ast antlr4_static antlrgen coverage_config)
+target_link_libraries(ast PRIVATE antlr4_static antlrgen coverage_config)

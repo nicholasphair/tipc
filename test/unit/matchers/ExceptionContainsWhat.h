@@ -1,6 +1,8 @@
-#include <string>
+#define EOF -1
+#include <catch2/catch.hpp>
+
 #include <iostream>
-#include "SemanticError.h"
+#include <string>
 
 class ExceptionContainsWhat : public Catch::MatcherBase<std::exception> {
 public:

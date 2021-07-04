@@ -1,5 +1,5 @@
 add_library(types)
-target_sources(types PUBLIC
+target_sources(types PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/TypeInference.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/TypeInference.h
         ${CMAKE_CURRENT_SOURCE_DIR}/concrete/TipAlpha.cpp
@@ -45,7 +45,7 @@ target_sources(types PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/Substituter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/solver/Substituter.h
         )
-target_include_directories(types PUBLIC
+target_include_directories(types PRIVATE
         ${CMAKE_SOURCE_DIR}/src
         ${CMAKE_SOURCE_DIR}/src/error
         ${CMAKE_SOURCE_DIR}/src/frontend/ast
@@ -55,4 +55,4 @@ target_include_directories(types PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/constraints
         ${CMAKE_CURRENT_SOURCE_DIR}/solver
         )
-target_link_libraries(types coverage_config loguru)
+target_link_libraries(types PRIVATE coverage_config loguru)
