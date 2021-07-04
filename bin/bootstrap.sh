@@ -10,6 +10,7 @@ echogreen() {
   echo "${green}${@}${reset}"
 }
 
+
 echoerr() {
   local red=$(tput setaf 1)
   local reset=$(tput sgr0)
@@ -33,7 +34,9 @@ bootstrap_ubuntu_dependencies() {
     zlib1g-dev \
     lcov
 
-  sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+  wget https://apt.llvm.org/llvm.sh
+  chmod +x llvm.sh
+  sudo ./llvm.sh $LLVM_DIR
 
   sudo apt -y install \
     libllvm-$LLVM_VERSION-ocaml-dev \
@@ -78,10 +81,12 @@ bootstrap_linux() {
   fi
 }
 
+
 bootstrap_mac_env() {
   echo export LLVM_DIR=$(brew --prefix llvm@$LLVM_VERSION)/lib/cmake >> ~/.bashrc
   echo export TIPCLANG=$(brew --prefix llvm@$LLVM_VERSION)/bin/clang >> ~/.bashrc
 }
+
 
 bootstrap_mac_dependencies() {
   if ! [ -x "$(command -v brew)" ]; then
@@ -123,7 +128,6 @@ bootstrap() {
   echogreen '--------------------------------------------------------------------------------'
   echogreen '* bashrc has been updated - be sure to source the file or restart your shell.  *'
   echogreen '--------------------------------------------------------------------------------'
-
 }
 
 bootstrap
