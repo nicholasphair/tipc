@@ -31,14 +31,21 @@ bootstrap_ubuntu_dependencies() {
   sudo ./kitware-archive.sh
 
   sudo apt -y install \
+    cmake 
+
+  cmake --version
+
+  sudo apt -y install \
     java-1.$JAVA_VERSION.0-amazon-corretto-jdk \
     git \
-    cmake \
     pkg-config \
     uuid-dev \
     antlr$ANTLR_VERSION \
     zlib1g-dev \
     lcov
+  
+
+  cmake --version
 
   wget https://apt.llvm.org/llvm.sh
   chmod +x llvm.sh
