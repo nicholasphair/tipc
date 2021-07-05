@@ -1,0 +1,25 @@
+name: build-and-test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: 
+          - ubuntu-18.04
+          - macos-11
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./bin/bootstrap.sh
+      - run: |
+          . ~/.bashrc
+          mkdir build
+          pushd build
+          cmake ../
+          make -j2
+          popd
+      - run: ./bin/runtests.sh
