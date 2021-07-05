@@ -26,6 +26,10 @@ bootstrap_ubuntu_dependencies() {
   sudo add-apt-repository 'deb https://apt.corretto.aws stable main'
   sudo apt -y update
 
+  whereis cmake
+  which cmake
+  cmake --version
+
   wget https://apt.kitware.com/kitware-archive.sh
   chmod +x kitware-archive.sh
   sudo ./kitware-archive.sh
@@ -33,6 +37,7 @@ bootstrap_ubuntu_dependencies() {
   sudo apt -y install \
     cmake 
 
+  /usr/bin/cmake --version
   whereis cmake
   which cmake
   cmake --version
