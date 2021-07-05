@@ -60,4 +60,4 @@ target_include_directories(
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/treetypes
           ${CMAKE_SOURCE_DIR}/src/frontend/prettyprint
           ${ANTLR_TIPGrammar_OUTPUT_DIR})
-target_link_libraries(ast PRIVATE antlr4_static antlrgen coverage_config)
+target_link_libraries(ast PRIVATE antlr4_static antlrgen codegen coverage_config)
