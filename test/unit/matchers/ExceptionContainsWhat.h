@@ -1,4 +1,3 @@
-#define EOF -1
 #include <catch2/catch.hpp>
 
 #include <iostream>
