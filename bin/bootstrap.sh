@@ -26,6 +26,7 @@ bootstrap_ubuntu_dependencies() {
   sudo add-apt-repository 'deb https://apt.corretto.aws stable main'
   sudo apt -y update
 
+  echo $PATH
   whereis cmake
   which cmake
   cmake --version
