@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-declare -r ROOT_DIR=${TRAVIS_BUILD_DIR:-$(git rev-parse --show-toplevel)}
+declare -r ROOT_DIR=${GITHUB_WORKSPACE:-$(git rev-parse --show-toplevel)}
 
 pushd $ROOT_DIR
 lcov --capture --directory build -output-file coverage.info
