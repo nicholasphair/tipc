@@ -17,4 +17,4 @@ target_include_directories(
           ${CMAKE_SOURCE_DIR}/src/semantic/types/solver
           ${CMAKE_SOURCE_DIR}/src/semantic/weeding)
 llvm_map_components_to_libnames(llvm_libs Support Core Passes)
-target_link_libraries(codegen PRIVATE ${llvm_libs} coverage_config loguru)
+target_link_libraries(codegen PRIVATE ${llvm_libs} semantic error coverage_config loguru)
