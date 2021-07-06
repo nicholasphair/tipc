@@ -46,6 +46,11 @@ jobs:
           key: linux-build-${{ github.sha }}
       - run: sudo apt install lcov 
       - run: ./bin/gencov.sh
+      - uses: codecov/codecov-action@v1
+        with:
+          files: ./coverage.info
+          flags: codecoverage 
+          verbose: true 
   docs:
     needs: build
     runs-on: ubuntu-18.04
@@ -54,4 +59,9 @@ jobs:
       - run: sudo apt install lcov doxygen graphviz python3 python3-pip python3-setuptools
       - run: python3 -m pip install coverxygen
       - run: ./bin/gendocs.sh
+      - uses: codecov/codecov-action@v1
+        with:
+          files: ./docs/doc-coverage.info
+          flags: doccoverage 
+          verbose: true 
 

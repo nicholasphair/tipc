@@ -10,13 +10,6 @@ lcov --remove coverage.info '*.hpp' -o coverage.info
 lcov --remove coverage.info '*/externals/*' -o coverage.info
 lcov --remove coverage.info '*/antlr4cpp_generated_src/*' -o coverage.info
 genhtml coverage.info -output-directory coverage.out
-if [ -n "$CI" ]; then
-  bash <(curl -s https://codecov.io/bash) \
-    -f coverage.info \
-    -F codecoverage || 
-    echo "Codecov did not collect coverage reports"
-fi
-popd
 
 echo Coverage report has been generated as coverage.info
 echo An HTML view of this report is available in coverage.out
