@@ -30,21 +30,18 @@ jobs:
         id: cache-build
         uses: actions/cache@v2
         with:
-          path: |
-            build
-            bin
+          path: build
           key: linux-build-${{ github.sha }}
   tests:
     needs: build
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v2
       - name: Restore build
         id: cache-build
         uses: actions/cache@v2
         with:
-          path: |
-            build
-            bin
+          path: build
           key: linux-build-${{ github.sha }}
       - run: ./bin/runtests.sh
       - run: ./bin/gencov.sh
@@ -52,13 +49,12 @@ jobs:
     needs: build
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v2
       - name: Restore build
         id: cache-build
         uses: actions/cache@v2
         with:
-          path: |
-            build
-            bin
+          path: build
           key: linux-build-${{ github.sha }}
       - run: sudo apt install lcov doxygen graphviz python3 python3-pip
       - run: python3 -m pip install setuptools coverxygen
