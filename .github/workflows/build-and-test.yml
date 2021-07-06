@@ -25,6 +25,7 @@ jobs:
           cmake ../
           make -j2
           popd
+      - run: ./bin/runtests.sh
       - name: Cache build
         if: runner.os == 'Linux'
         id: cache-build
@@ -32,7 +33,7 @@ jobs:
         with:
           path: build
           key: linux-build-${{ github.sha }}
-  tests:
+  code-coverage:
     needs: build
     runs-on: ubuntu-18.04
     steps:
@@ -43,7 +44,6 @@ jobs:
         with:
           path: build
           key: linux-build-${{ github.sha }}
-      - run: ./bin/runtests.sh
       - run: ./bin/gencov.sh
   docs:
     needs: build
@@ -57,6 +57,6 @@ jobs:
           path: build
           key: linux-build-${{ github.sha }}
       - run: sudo apt install lcov doxygen graphviz python3 python3-pip
-      - run: python3 -m pip install setuptools coverxygen
+      - run: python3 -m pip install coverxygen
       - run: ./bin/gendocs.sh
 
