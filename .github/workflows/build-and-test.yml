@@ -15,7 +15,7 @@ jobs:
       matrix:
         os: 
           - ubuntu-18.04
-          - macos-10.15
+            #- macos-10.15
     steps:
       - uses: actions/checkout@v2
       - run: ./bin/bootstrap.sh
@@ -44,19 +44,14 @@ jobs:
         with:
           path: build
           key: linux-build-${{ github.sha }}
+      - run: sudo apt install lcov 
       - run: ./bin/gencov.sh
   docs:
     needs: build
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - name: Restore build
-        id: cache-build
-        uses: actions/cache@v2
-        with:
-          path: build
-          key: linux-build-${{ github.sha }}
-      - run: sudo apt install lcov doxygen graphviz python3 python3-pip
+      - run: sudo apt install lcov doxygen graphviz python3 python3-pip python3-setuptools
       - run: python3 -m pip install coverxygen
       - run: ./bin/gendocs.sh
 
