@@ -376,6 +376,20 @@ TEST_CASE("Unifier: Test unifying two different type variables", "[Unifier]") {
     REQUIRE_NOTHROW(unifier.unify(tipVarA, tipVarB));
 }
 
+TEST_CASE("Unifier: Test unifying unknown term.two different type variables", "[Unifier]") {
+  ASTVariableExpr variableExprA("foo");
+  auto tipVarA = std::make_shared<TipVar>(&variableExprA);
+
+  ASTVariableExpr variableExprB("foo");
+  auto tipVarB = std::make_shared<TipVar>(&variableExprB);
+
+  TypeConstraint constraint(tipVarA, tipVarB);
+  std::vector<TypeConstraint> constraints {constraint};
+
+  Unifier unifier(constraints);
+  REQUIRE_NOTHROW(unifier.unify(tipVarA, tipVarB));
+}
+
 TEST_CASE("Unifier: Test closing mu ", "[Unifier]") {
     // Some building block types for setting up test
     ASTVariableExpr variableExprG("g");
