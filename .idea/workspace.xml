@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated />
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="10631f00-226d-49c4-a656-66dc5975b785" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:tipc-macos" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/codegen/CodeGenFunctions.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/codegen/CodeGenerator.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/ast/treetypes/ASTAccessExpr.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/ast/treetypes/ASTAccessExpr.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/ast/treetypes/ASTAllocExpr.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/ast/treetypes/ASTBinaryExpr.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/ast/treetypes/ASTDeRefExpr.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/ast/treetypes/ASTErrorStmt.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/ast/treetypes/ASTNumberExpr.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/iterators/IteratorImpl.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/prettyprint/ASTVisualizer.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/frontend/prettyprint/ASTVisualizer.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/tipc.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/test/unit/frontend/ASTVisualizerTest.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file:///usr/local/opt/llvm/include/llvm/ADT/ArrayRef.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file:///usr/local/opt/llvm/include/llvm/ADT/Twine.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file:///usr/local/opt/llvm/include/llvm/IR/ConstantFolder.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file:///usr/local/opt/llvm/include/llvm/IR/GlobalValue.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file:///usr/local/opt/llvm/include/llvm/IR/IRBuilder.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file:///usr/local/opt/llvm/include/llvm/IR/IRBuilderFolder.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file:///usr/local/opt/llvm/include/llvm/IR/Instructions.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file:///usr/local/opt/llvm/include/llvm/IR/Value.h" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2022" />
+    <option name="minorVersion" value="2" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1zpBn703gULCVTVUrC6kkWnYf0M" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.advertisement.text.has.clang-format": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/opt/cs6620/repos/tipc/test/unit/frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CMakeSettings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/unit/frontend" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Catch.Check Assignable: variable lhs">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Check Assignable: variable lhs" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="semantic_unit_tests" CONFIG_NAME="tipc-macos" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="semantic_unit_tests" TEST_CLASS="[Symbol]" TEST_METHOD="Check Assignable: variable lhs" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IteratorUtils: Different iterator impls cannot be equal" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="frontend_unit_tests" CONFIG_NAME="tipc-macos" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="frontend_unit_tests" TEST_CLASS="[IteratorUtils]" TEST_METHOD="IteratorUtils: Different iterator impls cannot be equal" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IteratorUtils: Iterators at different traversal points are not equal" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="frontend_unit_tests" CONFIG_NAME="tipc-macos" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="frontend_unit_tests" TEST_CLASS="[IteratorUtils]" TEST_METHOD="IteratorUtils: Iterators at different traversal points are not equal" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IteratorUtils: Iterators of same type and pointing to same spot are equalt" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="frontend_unit_tests" CONFIG_NAME="tipc-macos" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="frontend_unit_tests" TEST_CLASS="[IteratorUtils]" TEST_METHOD="IteratorUtils: Iterators of same type and pointing to same spot are equalt" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Iterator: Test copy constructor" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="frontend_unit_tests" CONFIG_NAME="tipc-macos" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="frontend_unit_tests" TEST_CLASS="[Iterator]" TEST_METHOD="Iterator: Test copy constructor" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tipc" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$PROJECT_DIR$/test/system/selftests/fibs.tip " REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" CONFIG_NAME="tipc-macos" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="tipc" EXPLICIT_BUILD_TARGET_NAME="all">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Catch.Check Assignable: variable lhs" />
+      <item itemvalue="Catch.IteratorUtils: Different iterator impls cannot be equal" />
+      <item itemvalue="Catch.IteratorUtils: Iterators at different traversal points are not equal" />
+      <item itemvalue="Catch.IteratorUtils: Iterators of same type and pointing to same spot are equalt" />
+      <item itemvalue="Catch.Iterator: Test copy constructor" />
+      <item itemvalue="CMake Application.tipc" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Catch.Check Assignable: variable lhs" />
+        <item itemvalue="Catch.IteratorUtils: Iterators of same type and pointing to same spot are equalt" />
+        <item itemvalue="Catch.IteratorUtils: Iterators at different traversal points are not equal" />
+        <item itemvalue="Catch.IteratorUtils: Different iterator impls cannot be equal" />
+        <item itemvalue="Catch.Iterator: Test copy constructor" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="10631f00-226d-49c4-a656-66dc5975b785" name="Default Changelist" comment="" />
+      <created>1634835313374</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1634835313374</updated>
+      <workItem from="1659505289663" duration="27000" />
+      <workItem from="1659505330086" duration="307000" />
+      <workItem from="1659505977535" duration="452000" />
+      <workItem from="1659507160127" duration="28503000" />
+      <workItem from="1660836403782" duration="898000" />
+      <workItem from="1660942767762" duration="17172000" />
+      <workItem from="1661118530661" duration="595000" />
+      <workItem from="1661644283324" duration="1285000" />
+      <workItem from="1662604195094" duration="50000" />
+      <workItem from="1663115084371" duration="22519000" />
+      <workItem from="1663865797130" duration="460000" />
+      <workItem from="1665416772729" duration="1709000" />
+      <workItem from="1665762823985" duration="796000" />
+      <workItem from="1687667912039" duration="1799000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticEditVcpkgJson value="false" />
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file:///usr/local/opt/llvm/include/llvm/IR/ConstantFolder.h</url>
+          <line>75</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file:///usr/local/opt/llvm/include/llvm/IR/IRBuilderFolder.h</url>
+          <line>44</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/codegen/CodeGenFunctions.cpp</url>
+          <line>415</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/codegen/CodeGenFunctions.cpp</url>
+          <line>419</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/codegen/CodeGenFunctions.cpp</url>
+          <line>452</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/codegen/CodeGenFunctions.cpp</url>
+          <line>387</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/codegen/CodeGenFunctions.cpp</url>
+          <line>418</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/frontend/iterators/Iterator.cpp</url>
+          <line>6</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/frontend/iterators/Iterator.cpp</url>
+          <line>2</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/frontend/ast/ASTBuilder.cpp</url>
+          <line>98</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/frontend/ast/ASTBuilder.cpp</url>
+          <line>420</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

@@ -17,7 +17,6 @@ build
 *.ll
 
 # CLion
-.idea/
 cmake-build-debug
 
 # Vim
