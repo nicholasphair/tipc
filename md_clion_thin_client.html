@@ -100,7 +100,7 @@ Configuring the Remote environment.</h1>
 <p>To confirm the module was successfully loaded check the value of the <code>TIPCLANG</code> environment variable. <br  />
  </p><div class="fragment"><div class="line">$ echo $TIPCLANG</div>
 <div class="line">/sw/ubuntu-22.04/llvm/14.0.6/bin/clang-14</div>
-</div><!-- fragment --><p>To load the <code>tipc</code>environment every time you ssh to portal, add the <code>module load</code> command to your <code>bashrc</code>. </p><div class="fragment"><div class="line">echo &#39;module load ~/tipc/conf/modulefiles/tipc/F23&#39; &gt;&gt; ~/.bashrc</div>
+</div><!-- fragment --><p>To load the <code>tipc</code> environment every time you ssh to portal, add the <code>module load</code> command to your <code>bashrc</code>. </p><div class="fragment"><div class="line">echo &#39;module load ~/tipc/conf/modulefiles/tipc/F23&#39; &gt;&gt; ~/.bashrc</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md31"></a>
 Building tipc from the Command Line.</h1>
 <p>At this point you should be fully equipped to build tipc on portal from the command line.</p>
@@ -122,17 +122,19 @@ Using the JetBrains thin client</h1>
 <div class="image">
 <img src="gateway_connect_ssh_connection.png" alt=""/>
 </div>
-<p>Select the "+" icon on the "SSH Configurations" page. Fill out the information as done in the screenshot below. Note the "Host" field should match the name of the entry in your ssh config. We chose the name, "portal", in our initial setup. If preferred, you can prevent the connection from being dropped for inactivity, by checking the "Send keep-alive messages..." box. <br  />
+<p>Select the "+" icon on the "SSH Configurations" page. Fill out the information as done in the screenshot below. Note the "Host" field should match the name of the entry in your ssh config. We chose the name, "portal", in our initial setup. <br  />
 </p>
 <div class="image">
 <img src="gateway_ssh_configuration.png" alt=""/>
 </div>
-<p>Verify you can establish a connection.</p>
+<p>If preferred, you can prevent the connection from being dropped for inactivity. Under "Connection Parameters" check the "Send keep-alive messages..." box. <br  />
+</p>
+<p>Select "Test Conneection" to verify you can establish a connection. <br  />
+</p>
 <div class="image">
 <img src="gateway_ssh_configuration_connection_success.png" alt=""/>
 </div>
-<p>Select "Okay" and return to the "Connect to SSH" page. In the "Connection" drop down select the connection you just created. Select "Check Connection and
-Continue". <br  />
+<p>Select "Ok" on the "SSH Configurations" page and return to the "Connect to SSH" page. In the "Connection" drop down select the connection you just created. Select "Check Connection and Continue". <br  />
 </p>
 <div class="image">
 <img src="gateway_connect_ssh_connection_check_and_continue.png" alt=""/>
@@ -147,7 +149,7 @@ Continue". <br  />
 </div>
 <p>The <code>tipc</code> project will open in the JetBrains client. <br  />
 </p>
-<p>The IDE running on portal (that you are connected to) does not source the <code>bashrc</code> file as your shell does. As such, we need to configure your build environment withing CLion. <br  />
+<p>The IDE running on portal (that you are connected to) does not source the <code>bashrc</code> file as your shell does. As such, we need to configure your build environment within CLion. <br  />
 </p>
 <p>From the "Project Wizard" popup accept the default toolchain by pressing "Next". <br  />
 </p>
@@ -160,6 +162,8 @@ Continue". <br  />
 </p>
 <p>Once complete, CLion will index your files and construct build configurations. <br  />
 </p>
+<h1><a class="anchor" id="autotoc_md33"></a>
+Running tipc from CLion</h1>
 <p>You should now be able to run and debug tipc with the "play" and "debug" icons respectively. <br  />
 </p>
 <div class="image">
