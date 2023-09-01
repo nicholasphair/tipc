@@ -98,8 +98,8 @@ Configuring the Remote environment.</h1>
 </div><!-- fragment --><p>Please note that there is an assumption in the stock modulefile that <code>tipc</code> is cloned to your home directory. If that assumption does not hold true, update the <code>topdir</code> variable in <code>conf/modules/tipc/F23</code> to the actual location of the <code>tipc</code> repository. <br  />
 </p>
 <p>To confirm the module was successfully loaded check the value of the <code>TIPCLANG</code> environment variable. <br  />
- </p><div class="fragment"><div class="line">$ echo $TIPCLANG</div>
-<div class="line">/sw/ubuntu-22.04/llvm/14.0.6/bin/clang-14</div>
+ </p><div class="fragment"><div class="line">echo $TIPCLANG</div>
+<div class="line"># /sw/ubuntu-22.04/llvm/14.0.6/bin/clang-14</div>
 </div><!-- fragment --><p>To load the <code>tipc</code> environment every time you ssh to portal, add the <code>module load</code> command to your <code>bashrc</code>. </p><div class="fragment"><div class="line">echo &#39;module load ~/tipc/conf/modulefiles/tipc/F23&#39; &gt;&gt; ~/.bashrc</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md31"></a>
 Building tipc from the Command Line.</h1>
@@ -129,7 +129,7 @@ Using the JetBrains thin client</h1>
 </div>
 <p>If preferred, you can prevent the connection from being dropped for inactivity. Under "Connection Parameters" check the "Send keep-alive messages..." box. <br  />
 </p>
-<p>Select "Test Conneection" to verify you can establish a connection. <br  />
+<p>Select "Test Connection" to verify you can establish a connection. <br  />
 </p>
 <div class="image">
 <img src="gateway_ssh_configuration_connection_success.png" alt=""/>
@@ -153,7 +153,7 @@ Using the JetBrains thin client</h1>
 </p>
 <p>From the "Project Wizard" popup accept the default toolchain by pressing "Next". <br  />
 </p>
-<p>On the following page, update the default CMake profile to use <code>build</code> as the "Build directory" and set the "Environment" field to <code>LLVM_DIR=/sw/ubuntu-22.04/llvm/14.0.6/lib/cmake</code>. Select "Finish". <br  />
+<p>Update the default CMake profile on the following page. Set the "Generator" to "Unix Makefiles", the "Build directory" to <code>build</code>, and the "Environment" to <code>LLVM_DIR=/sw/ubuntu-22.04/llvm/14.0.6/lib/cmake</code>. Select "Finish". <br  />
 </p>
 <div class="image">
 <img src="client_wizard_cmake.png" alt=""/>
