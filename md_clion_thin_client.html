@@ -115,38 +115,24 @@ Using the JetBrains thin client</h1>
 <p><a href="https://www.jetbrains.com/remote-development/gateway/">JetBrains Gateway</a> can be installed as a standalone app. It also comes part of any JetBrains IDE distribution. That is, if you have CLion installed already, you need not install the gateway. The instructions will continue with the JetBrains Gateway standalone app but are nearly identical, and have been tested with CLion. <br  />
 </p>
 <p>First, launch the JetBrains Gateway application. From the "All Providers" page select "New Connection" under "SSH Connection".</p>
-<div class="image">
-<img src="gateway_all_provider_new_connection.png" alt=""/>
-</div>
+<p><img src="gateway_all_provider_new_connection.png" alt="" class="inline"/></p>
 <p>From the "Connect to SSH" page, select the gear icon next to the "Connection" drop down.</p>
-<div class="image">
-<img src="gateway_connect_ssh_connection.png" alt=""/>
-</div>
+<p><img src="gateway_connect_ssh_connection.png" alt="" class="inline"/></p>
 <p>Select the "+" icon on the "SSH Configurations" page. Fill out the information as done in the screenshot below. Note the "Host" field should match the name of the entry in your ssh config. We chose the name, "portal", in our initial setup. <br  />
 </p>
-<div class="image">
-<img src="gateway_ssh_configuration.png" alt=""/>
-</div>
+<p><img src="gateway_ssh_configuration.png" alt="" class="inline"/></p>
 <p>If preferred, you can prevent the connection from being dropped for inactivity. Under "Connection Parameters" check the "Send keep-alive messages..." box. <br  />
 </p>
 <p>Select "Test Connection" to verify you can establish a connection. <br  />
 </p>
-<div class="image">
-<img src="gateway_ssh_configuration_connection_success.png" alt=""/>
-</div>
+<p><img src="gateway_ssh_configuration_connection_success.png" alt="" class="inline"/></p>
 <p>Select "Ok" on the "SSH Configurations" page and return to the "Connect to SSH" page. In the "Connection" drop down select the connection you just created. Select "Check Connection and Continue". <br  />
 </p>
-<div class="image">
-<img src="gateway_connect_ssh_connection_check_and_continue.png" alt=""/>
-</div>
+<p><img src="gateway_connect_ssh_connection_check_and_continue.png" alt="" class="inline"/></p>
 <p>You will then be prompted to "Choose IDE and Project". For the "IDE version", choose "CLion". For the "Project directory" choose the <code>tipc</code> repository we previously cloned to your home directory. Select "Download IDE and Connect"</p>
-<div class="image">
-<img src="gateway_choose_ide.png" alt=""/>
-</div>
+<p><img src="gateway_choose_ide.png" alt="" class="inline"/></p>
 <p>This process may take several minutes. Once complete, <code>tipc</code> should appear as an SSH project running on "portal". Select the project to open it.</p>
-<div class="image">
-<img src="gateway_ssh_project.png" alt=""/>
-</div>
+<p><img src="gateway_ssh_project.png" alt="" class="inline"/></p>
 <p>The <code>tipc</code> project will open in the JetBrains client. <br  />
 </p>
 <p>The IDE running on portal (that you are connected to) does not source the <code>bashrc</code> file as your shell does. As such, we need to configure your build environment within CLion. <br  />
@@ -155,9 +141,7 @@ Using the JetBrains thin client</h1>
 </p>
 <p>Update the default CMake profile on the following page. Set the "Generator" to "Unix Makefiles", the "Build directory" to <code>build</code>, and the "Environment" to <code>LLVM_DIR=/sw/ubuntu-22.04/llvm/14.0.6/lib/cmake</code>. Select "Finish". <br  />
 </p>
-<div class="image">
-<img src="client_wizard_cmake.png" alt=""/>
-</div>
+<p><img src="client_wizard_cmake.png" alt="" class="inline"/></p>
 <p>Note, if the "Project Wizard" does not appear, you can reach the same configuration page from the CLion settings. From the settings, navigate to "Build, Execution, Deployment" in the side menu, and then to "CMake". From here you can configure the default profile appropriately. <br  />
 </p>
 <p>Once complete, CLion will index your files and construct build configurations. <br  />
@@ -166,20 +150,14 @@ Using the JetBrains thin client</h1>
 Running tipc from CLion</h1>
 <p>You should now be able to run and debug tipc with the "play" and "debug" icons respectively. <br  />
 </p>
-<div class="image">
-<img src="client_run_debug.png" alt=""/>
-</div>
+<p><img src="client_run_debug.png" alt="" class="inline"/></p>
 <p>You can pass arguments to <code>tipc</code> just as you do on the command line by editing the Run/Debug configuration. <br  />
 </p>
-<div class="image">
-<img src="client_edit_conf.png" alt=""/>
-</div>
+<p><img src="client_edit_conf.png" alt="" class="inline"/></p>
 <p>The screenshot below shows how you can pass the <code>--help</code> flag as one of the "Program arguments". <br  />
 </p>
-<div class="image">
-<img src="client_conf_tipc_args.png" alt=""/>
-</div>
- </div></div><!-- contents -->
+<p><img src="client_conf_tipc_args.png" alt="" class="inline"/> </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
