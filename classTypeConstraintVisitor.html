@@ -340,7 +340,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Type constraints for field access. </p>
-<p>Type rule for "E.X": [[E]] = { f1:v1, ..., fn:vn } where fi is the ith field in the program's uber record and vi = [[E.X]] if fi = X and \alpha otherwise </p>
+<p>Type rule for "E.X": [[E]] = { f1:v1, ..., fn:vn } where fi is the ith field in the program's global record and vi = [[E.X]] if fi = X and \alpha otherwise </p>
 
 <p>Reimplemented from <a class="el" href="classASTVisitor.html#a14269c3da9058ea2e29a6e4d891d7753">ASTVisitor</a>.</p>
 
@@ -746,7 +746,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Type constraints for record expression. </p>
-<p>Type rule for "{ X1:E1, ..., Xn:En }": [[{ X1:E1, ..., Xn:En }]] = { f1:v1, ..., fn:vn } where fi is the ith field in the program's uber record and vi = [[Ei]] if fi = Xi and \alpha otherwise </p>
+<p>Type rule for "{ X1:E1, ..., Xn:En }": [[{ X1:E1, ..., Xn:En }]] = { f1:v1, ..., fn:vn } where fi is the ith field in the program's global record and vi = [[Ei]] if fi = Xi and \alpha otherwise </p>
 
 <p>Reimplemented from <a class="el" href="classASTVisitor.html#a433dca62a6a3852d243730340421a112">ASTVisitor</a>.</p>
 
